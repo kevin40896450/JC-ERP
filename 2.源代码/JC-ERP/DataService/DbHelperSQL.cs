@@ -368,6 +368,43 @@ namespace DataService
             }
         }
 
+        /// <summary>
+        /// 执行多条SQL语句，实现数据库事务。
+        /// </summary>
+        /// <param name="TModels"></param>
+        public static void ExecuteSqlTran(List<Model.TransModel> TModels)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlTransaction trans = conn.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    try
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        string cmdText;
+                        SqlParameter[] cmdParms;
+                        //循环
+                        for (int i = 0; i < TModels.Count; i++)
+                        {
+                            cmdText = TModels[i].Sql;
+                            cmdParms = TModels[i].parameters;
+                            PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
+                            int val = cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
         ///// <summary>
         ///// 开始一个事务
         ///// </summary>

@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace JC_ERP.Modules
+{
+    /// <summary>
+    /// 视图字典
+    /// </summary>
+    public class ViewDictionary
+    {
+        /// <summary>
+        /// 首页视图
+        /// </summary>
+        public const string Index = "/index";
+        /// <summary>
+        /// 登陆页面
+        /// </summary>
+        public const string Login = "/login.html";
+
+        #region 订单相关
+        public const string OrderAdd = "/Order/AddOrder";
+        #endregion
+    }
+}

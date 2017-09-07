@@ -44,19 +44,21 @@ namespace DataService.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into UserInfo(");
-            strSql.Append("UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel)");
+            strSql.Append("UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime)");
             strSql.Append(" values (");
-            strSql.Append("@UserID,@RoleID,@UserGuid,@UserName,@Pwd,@RealName,@Sex,@IDCard,@Tel)");
+            strSql.Append("@UserID,@RoleID,@UserGuid,@UserName,@Pwd,@RealName,@Sex,@IDCard,@Tel,@Status,@AddTime)");
             SqlParameter[] parameters = {
                     new SqlParameter("@UserID", SqlDbType.Int,4),
                     new SqlParameter("@RoleID", SqlDbType.Int,4),
-                    new SqlParameter("@UserGuid", SqlDbType.VarChar,50),
-                    new SqlParameter("@UserName", SqlDbType.VarChar,50),
-                    new SqlParameter("@Pwd", SqlDbType.VarChar,50),
-                    new SqlParameter("@RealName", SqlDbType.VarChar,50),
-                    new SqlParameter("@Sex", SqlDbType.VarChar,10),
-                    new SqlParameter("@IDCard", SqlDbType.VarChar,50),
-                    new SqlParameter("@Tel", SqlDbType.VarChar,50)};
+                    new SqlParameter("@UserGuid", SqlDbType.NVarChar,50),
+                    new SqlParameter("@UserName", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Pwd", SqlDbType.NVarChar,50),
+                    new SqlParameter("@RealName", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Sex", SqlDbType.NVarChar,50),
+                    new SqlParameter("@IDCard", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Tel", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Status", SqlDbType.NVarChar,50),
+                    new SqlParameter("@AddTime", SqlDbType.DateTime)};
             parameters[0].Value = model.UserID;
             parameters[1].Value = model.RoleID;
             parameters[2].Value = model.UserGuid;
@@ -66,6 +68,8 @@ namespace DataService.DAL
             parameters[6].Value = model.Sex;
             parameters[7].Value = model.IDCard;
             parameters[8].Value = model.Tel;
+            parameters[9].Value = model.Status;
+            parameters[10].Value = model.AddTime;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -91,17 +95,21 @@ namespace DataService.DAL
             strSql.Append("RealName=@RealName,");
             strSql.Append("Sex=@Sex,");
             strSql.Append("IDCard=@IDCard,");
-            strSql.Append("Tel=@Tel");
+            strSql.Append("Tel=@Tel,");
+            strSql.Append("Status=@Status,");
+            strSql.Append("AddTime=@AddTime");
             strSql.Append(" where UserID=@UserID ");
             SqlParameter[] parameters = {
                     new SqlParameter("@RoleID", SqlDbType.Int,4),
-                    new SqlParameter("@UserGuid", SqlDbType.VarChar,50),
-                    new SqlParameter("@UserName", SqlDbType.VarChar,50),
-                    new SqlParameter("@Pwd", SqlDbType.VarChar,50),
-                    new SqlParameter("@RealName", SqlDbType.VarChar,50),
-                    new SqlParameter("@Sex", SqlDbType.VarChar,10),
-                    new SqlParameter("@IDCard", SqlDbType.VarChar,50),
-                    new SqlParameter("@Tel", SqlDbType.VarChar,50),
+                    new SqlParameter("@UserGuid", SqlDbType.NVarChar,50),
+                    new SqlParameter("@UserName", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Pwd", SqlDbType.NVarChar,50),
+                    new SqlParameter("@RealName", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Sex", SqlDbType.NVarChar,50),
+                    new SqlParameter("@IDCard", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Tel", SqlDbType.NVarChar,50),
+                    new SqlParameter("@Status", SqlDbType.NVarChar,50),
+                    new SqlParameter("@AddTime", SqlDbType.DateTime),
                     new SqlParameter("@UserID", SqlDbType.Int,4)};
             parameters[0].Value = model.RoleID;
             parameters[1].Value = model.UserGuid;
@@ -111,7 +119,9 @@ namespace DataService.DAL
             parameters[5].Value = model.Sex;
             parameters[6].Value = model.IDCard;
             parameters[7].Value = model.Tel;
-            parameters[8].Value = model.UserID;
+            parameters[8].Value = model.Status;
+            parameters[9].Value = model.AddTime;
+            parameters[10].Value = model.UserID;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -174,7 +184,7 @@ namespace DataService.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel from UserInfo ");
+            strSql.Append("select  top 1 UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime from UserInfo ");
             strSql.Append(" where UserID=@UserID ");
             SqlParameter[] parameters = {
                     new SqlParameter("@UserID", SqlDbType.Int,4)            };
@@ -211,7 +221,7 @@ namespace DataService.DAL
                 }
                 if (row["UserGuid"] != null)
                 {
-                    model.UserGuid = new Guid(row["UserGuid"].ToString());
+                    model.UserGuid = row["UserGuid"].ToString();
                 }
                 if (row["UserName"] != null)
                 {
@@ -237,6 +247,14 @@ namespace DataService.DAL
                 {
                     model.Tel = row["Tel"].ToString();
                 }
+                if (row["Status"] != null)
+                {
+                    model.Status = row["Status"].ToString();
+                }
+                if (row["AddTime"] != null && row["AddTime"].ToString() != "")
+                {
+                    model.AddTime = DateTime.Parse(row["AddTime"].ToString());
+                }
             }
             return model;
         }
@@ -247,7 +265,7 @@ namespace DataService.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel ");
+            strSql.Append("select UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime ");
             strSql.Append(" FROM UserInfo ");
             if (strWhere.Trim() != "")
             {
@@ -267,7 +285,7 @@ namespace DataService.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel ");
+            strSql.Append(" UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime ");
             strSql.Append(" FROM UserInfo ");
             if (strWhere.Trim() != "")
             {

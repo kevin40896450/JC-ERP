@@ -13,7 +13,7 @@ namespace JC_ERP.Modules
     {
         public LoginModule()
         {
-            Post["/login"] = p =>
+            Post[RouteDictionary.Login] = p =>
             {
                 string url = Request.Query["returnUrl"].Value;
                 if (String.IsNullOrEmpty(url)) url = "/";
@@ -30,14 +30,14 @@ namespace JC_ERP.Modules
                 }
             };
             
-            Get["/login"] = p =>
+            Get[RouteDictionary.Login] = p =>
             {
-                return View["/login.html"];
+                return View[ViewDictionary.Login];
             };
 
-            Get["/logout"] = p =>
+            Get[RouteDictionary.Logout] = p =>
             {
-                return this.LogoutAndRedirect("/login");
+                return this.LogoutAndRedirect(ViewDictionary.Login);
             };
         }        
     }

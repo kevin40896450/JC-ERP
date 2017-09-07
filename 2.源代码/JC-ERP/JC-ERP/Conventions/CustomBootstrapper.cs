@@ -14,6 +14,7 @@ namespace JC_ERP
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
+            StaticConfiguration.DisableErrorTraces = false;
             base.ApplicationStartup(container, pipelines);
         }
         
@@ -44,8 +45,11 @@ namespace JC_ERP
         {
             base.ConfigureConventions(nancyConventions);
             nancyConventions.StaticContentsConventions.Clear();
-            nancyConventions.StaticContentsConventions.AddDirectory("Content");            
-          //  nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Content/Scripts"));
+            nancyConventions.StaticContentsConventions.AddDirectory("Content");
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Content/bootstrap"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Content/Scripts"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Content/dist"));
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Content/plugins"));
         }
     }
 

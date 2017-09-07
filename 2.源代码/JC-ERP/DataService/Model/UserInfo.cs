@@ -12,13 +12,15 @@ namespace DataService.Model
         #region Model
         private int _userid;
         private int _roleid;
-        private Guid _userguid;
+        private string _userguid;
         private string _username;
         private string _pwd;
         private string _realname;
         private string _sex;
         private string _idcard;
         private string _tel;
+        private string _status;
+        private DateTime _addtime = DateTime.Now;
         /// <summary>
         /// 用户编号
         /// </summary>
@@ -38,7 +40,7 @@ namespace DataService.Model
         /// <summary>
         /// 用户识别码
         /// </summary>
-        public Guid UserGuid
+        public string UserGuid
         {
             set { _userguid = value; }
             get { return _userguid; }
@@ -90,6 +92,22 @@ namespace DataService.Model
         {
             set { _tel = value; }
             get { return _tel; }
+        }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public string Status
+        {
+            set { _status = value; }
+            get { return _status; }
+        }
+        /// <summary>
+        /// 添加时间
+        /// </summary>
+        public DateTime AddTime
+        {
+            set { _addtime = value; }
+            get { return _addtime; }
         }
         #endregion Model
 

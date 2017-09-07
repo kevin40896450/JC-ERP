@@ -4,16 +4,17 @@ using Nancy.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataService.Model;
+using Security;
 
 namespace JC_ERP
 {
     public class UserMapper : IUserMapper
     {
-        private static List<v_UserRole> users;
+        public static List<UserLimitInfo> users;
         static UserMapper()
         {
-            users = UserDataService.SingleObj.Users;
+            UserManager manage = new UserManager();
+            users = manage.Users;
         }
 
         /// <summary>
@@ -25,10 +26,19 @@ namespace JC_ERP
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
             var userRecord = users.FirstOrDefault(u => new Guid(u.UserGuid) == identifier);
-            return userRecord == null ? null : new UserIdentity {
-                UserName = userRecord.UserName,
-                Claims = new [] {userRecord.UserID.ToString(),userRecord.Pwd }
-            };
+            if (userRecord != null)
+            {
+                List<MenuTreeInfo> list = new MenuManager().InitMenu(userRecord.MenuList);
+                return new UserIdentity
+                {
+                    UserID = userRecord.UserID,
+                    UserName = userRecord.UserName,
+                    Claims = new[] { userRecord.Pwd },
+                    Menus = list,
+                    MenuTrees = new MenuManager().SerializationMenu(list)
+                };
+            }
+            else return null;
         }
 
         /// <summary>
@@ -53,7 +63,7 @@ namespace JC_ERP
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static v_UserRole GetUser(string username)
+        public static UserLimitInfo GetUser(string username)
         {
             var userRecord = users.FirstOrDefault(u => u.UserName== username);
 

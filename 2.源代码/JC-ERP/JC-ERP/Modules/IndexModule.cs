@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using DataService.Model;
 using Nancy;
 using Nancy.Security;
+using Security;
 
 namespace JC_ERP.Modules
 {
@@ -14,13 +14,12 @@ namespace JC_ERP.Modules
         {
             this.RequiresAuthentication();
 
-            Get["/"]= Get["/index"] = Post["/"] = p => View["/index"];
+            Get["/"]= Get[RouteDictionary.Index] = Post["/"] = p => View[ViewDictionary.Index];
 
-            Get["/MenuList"] = p =>
+            Get[RouteDictionary.MenuList] = p =>
             {
-                v_UserRole user = UserMapper.GetUser(Context.CurrentUser.UserName);
-                UserLimit limit = new UserLimit(user);
-                return Response.AsJson(limit.MenuList);
+                UserIdentity user = (UserIdentity)Context.CurrentUser;
+                return Response.AsJson(user.MenuTrees);
             };
 
             //获取编辑密码页面
