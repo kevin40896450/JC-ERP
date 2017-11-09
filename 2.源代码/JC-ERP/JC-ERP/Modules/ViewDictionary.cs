@@ -21,6 +21,11 @@ namespace JC_ERP.Modules
 
         #region 订单相关
         public const string OrderAdd = "/Order/AddOrder";
+
+        /// <summary>
+        /// 查询合同
+        /// </summary>
+        public const string OrderList = "/Order/OrderList";
         #endregion
     }
 }

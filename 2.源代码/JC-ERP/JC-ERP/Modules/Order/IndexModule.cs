@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Common;
+using DataService.Model;
 using JC.Domain.DTO;
 using JC.Domain.Respository;
+using JC_ERP.Model;
 using Nancy;
 using Nancy.Security;
 using Security;
@@ -86,6 +88,54 @@ namespace JC_ERP.Modules.Order
                     model.Message = ex.Message;
                 }
                 return Response.AsJson(model);
+            };
+
+            Get[RouteDictionary.OrderListGet] = p =>
+            {
+                string per = Request.Query["limit"];//显示数量
+                string offset = Request.Query["offset"];//当前记录条数
+                int pageSize = 10;//每页显示条数
+                int offsetNum = 0;//当前记录偏移量
+                if (!Int32.TryParse(offset, out offsetNum))
+                {
+                    offsetNum = 0;
+                }
+                if (!Int32.TryParse(per, out pageSize))
+                {
+                    pageSize = 10;
+                }
+                int pageNum = (offsetNum / pageSize) + 1;//当前页码
+                string sqlWhere = "1=1";
+                string buyer = Request.Query["buyer"];
+                if (!String.IsNullOrEmpty(buyer))
+                {
+                    sqlWhere += " and Buyer like '%" + SiteFun.cutechar(buyer) + "%'";
+                }                
+                string pro = Request.Query["p"];
+                if (!String.IsNullOrEmpty(pro))
+                {
+                    sqlWhere += " and ProName like '%" + SiteFun.cutechar(pro) + "%'";
+                }
+                string user = Request.Query["u"];
+                int uid = 0;
+                if (!String.IsNullOrEmpty(user) && Int32.TryParse(user, out uid) && uid > 0)
+                {
+                    sqlWhere += " and Use_UserID =" + uid;
+                }
+
+                OrderPageModel model = new OrderPageModel();
+                DataService.BLL.v_Order BOrder = new DataService.BLL.v_Order();
+                model.rows = BOrder.GetModelsByPage(sqlWhere, "OrderID desc", pageSize * (pageNum - 1) + 1, pageSize * pageNum);
+                model.total = BOrder.GetRecordCount(sqlWhere);
+                return Response.AsJson(model);
+            };
+
+            Get[RouteDictionary.OrderList] = p =>
+            {
+                UserIdentity user = (UserIdentity)Context.CurrentUser;
+                NavManager mgr = new NavManager();
+                NavInfo nav = mgr.CreateNav(Request.Path, user.Menus);
+                return View[ViewDictionary.OrderList, nav];
             };
         }
     }

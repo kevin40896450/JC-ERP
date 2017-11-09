@@ -146,7 +146,6 @@
     <Content Include="Content\dist\css\skins\_all-skins.min.css" />
     <Content Include="Content\dist\js\app.js" />
     <Content Include="Content\dist\js\app.min.js" />
-    <Content Include="Content\dist\js\Common.js" />
     <Content Include="Content\dist\js\demo.js" />
     <Content Include="Content\dist\js\index.js" />
     <Content Include="Content\dist\js\menu.js" />
@@ -513,7 +512,9 @@
     <Content Include="Content\plugins\Validator\bootstrapValidator.js" />
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.css" />
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.js" />
+    <Content Include="Content\Scripts\Common.js" />
     <Content Include="Content\Scripts\Order\AddOrder.js" />
+    <Content Include="Content\Scripts\Order\OrderList.js" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css.map" />
@@ -535,6 +536,7 @@
     <Content Include="Content\Address.json" />
     <None Include="Properties\PublishProfiles\Web.config.pubxml" />
     <Content Include="Views\Order\AddOrder.cshtml" />
+    <Content Include="Views\Order\OrderList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -550,6 +552,8 @@
     <Compile Include="Conventions\CustomBootstrapper.cs" />
     <Compile Include="Conventions\UserIdentity.cs" />
     <Compile Include="Conventions\UserMapper.cs" />
+    <Compile Include="Model\OrderPageModel.cs" />
+    <Compile Include="Model\PageBase.cs" />
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Modules\CommonModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
@@ -564,6 +568,10 @@
       <Project>{2bb90b8f-673b-4345-b24d-d3737f585eaa}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataService\DataService.csproj">
+      <Project>{564BA8D5-871F-44AF-9732-5225DAEA0647}</Project>
+      <Name>DataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JC.Domain\JC.Domain.csproj">
       <Project>{9da4fe0d-967e-431e-86f7-9c87b25f0445}</Project>
       <Name>JC.Domain</Name>
@@ -573,7 +581,9 @@
       <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\SendOrder\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

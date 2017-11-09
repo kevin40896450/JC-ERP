@@ -44,13 +44,19 @@ namespace JC_ERP.Modules
         /// </summary>
         public const string OrderAdd = "/add";
         /// <summary>
+        /// 查询合同
+        /// </summary>
+        public const string OrderList = "/List";
+        /// <summary>
         /// 获取产品类型分类
         /// </summary>
         public const string OrderBizType = "/BizType/List";
         /// <summary>
         /// 获取业务类型分类
         /// </summary>
-        public const string OrderProType = "/ProType/List/{name}";
+        public const string OrderProType = "/ProType/List/{name}";        
+
+        public const string OrderListGet = "/Get";        
         #endregion
     }
 }
