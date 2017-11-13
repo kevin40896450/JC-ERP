@@ -42,11 +42,11 @@ namespace JC_ERP.Modules
         /// <summary>
         /// 添加订单
         /// </summary>
-        public const string OrderAdd = "/add";
+        public const string Add = "/add";
         /// <summary>
         /// 查询合同
         /// </summary>
-        public const string OrderList = "/List";
+        public const string List = "/List";
         /// <summary>
         /// 获取产品类型分类
         /// </summary>
@@ -56,7 +56,11 @@ namespace JC_ERP.Modules
         /// </summary>
         public const string OrderProType = "/ProType/List/{name}";        
 
-        public const string OrderListGet = "/Get";        
+        public const string ListGet = "/Get";
+        #endregion
+
+        #region 发货页面路由
+        public const string SendOrderBase = "/SendOrder";
         #endregion
     }
 }

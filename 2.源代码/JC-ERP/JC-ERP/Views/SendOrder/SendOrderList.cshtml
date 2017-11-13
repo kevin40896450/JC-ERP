@@ -1,7 +1,7 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Security.NavInfo>
 
 @{
-    ViewBag.Title = "合同查询";
+    ViewBag.Title = "发货单查询";
     Layout = "Shared/_Layout.cshtml";
 }
 
@@ -28,7 +28,7 @@
     <script src="/Content/plugins/bootstrap-table/bootstrap-table.js"></script>
     <script src="/Content/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
     <!-- cxselect -->
-    <script src="/Content/plugins/cxselect/jquery.cxselect.js"></script>   
+    <script src="/Content/plugins/cxselect/jquery.cxselect.js"></script>
     <!-- page script -->
     <script src="~/Content/Scripts/Order/OrderList.js"></script>
 }
@@ -61,7 +61,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="proName" name="proName" placeholder="项目名称">
                             </div>
-                        </div>                        
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">业务员:</label>
 
@@ -78,18 +78,18 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="box box-line">
-                                    <div class="box-body">                                        
+                                    <div class="box-body">
                                         <table id="tb_order"></table>
                                     </div>
                                 </div>
                                 <!-- /.box -->
                             </div>
                         </div>
-                        
+
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        
+
                     </div>
                     <!-- /.box-footer -->
                 </form>

@@ -37,7 +37,7 @@ namespace JC_ERP.Modules
 
             Get[RouteDictionary.Logout] = p =>
             {
-                return this.LogoutAndRedirect(ViewDictionary.Login);
+                return this.LogoutAndRedirect(RouteDictionary.Login);
             };
         }        
     }

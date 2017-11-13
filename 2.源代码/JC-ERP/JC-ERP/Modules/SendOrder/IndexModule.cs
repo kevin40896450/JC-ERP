@@ -11,11 +11,11 @@ using Nancy;
 using Nancy.Security;
 using Security;
 
-namespace JC_ERP.Modules.Order
+namespace JC_ERP.Modules.SendOrder
 {
     public class IndexModule : NancyModule
     {
-        public IndexModule() : base(RouteDictionary.OrderBase)
+        public IndexModule() : base(RouteDictionary.SendOrderBase)
         {
             this.RequiresAuthentication();
 
@@ -24,7 +24,7 @@ namespace JC_ERP.Modules.Order
                 UserIdentity user = (UserIdentity)Context.CurrentUser;
                 NavManager mgr = new NavManager();
                 NavInfo nav = mgr.CreateNav(Request.Path, user.Menus);
-                return View[ViewDictionary.OrderAdd, nav];
+                return View[ViewDictionary.SendOrderAdd, nav];
             };
 
             Get[RouteDictionary.OrderBizType] = p =>
@@ -135,7 +135,7 @@ namespace JC_ERP.Modules.Order
                 UserIdentity user = (UserIdentity)Context.CurrentUser;
                 NavManager mgr = new NavManager();
                 NavInfo nav = mgr.CreateNav(Request.Path, user.Menus);
-                return View[ViewDictionary.OrderList, nav];
+                return View[ViewDictionary.SendOrderList, nav];
             };
         }
     }

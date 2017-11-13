@@ -537,6 +537,8 @@
     <None Include="Properties\PublishProfiles\Web.config.pubxml" />
     <Content Include="Views\Order\AddOrder.cshtml" />
     <Content Include="Views\Order\OrderList.cshtml" />
+    <Content Include="Views\SendOrder\AddSendOrder.cshtml" />
+    <Content Include="Views\SendOrder\SendOrderList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -560,6 +562,7 @@
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\Order\IndexModule.cs" />
     <Compile Include="Modules\RouteDictionary.cs" />
+    <Compile Include="Modules\SendOrder\IndexModule.cs" />
     <Compile Include="Modules\ViewDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -581,9 +584,7 @@
       <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\SendOrder\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
