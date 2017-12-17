@@ -12,8 +12,8 @@ namespace JC.Domain.DTO
 
     public class Summary<T> where T : class, IAggregateRoot
     {
-        public IList<T> List { get; set; }
+        public IList<T> rows { get; set; }
 
-        public int Total { get; set; }
+        public int total { get; set; }
     }
 }

@@ -50,7 +50,7 @@ var srvUrl = "/Order/Get";
 //初始化产品类型表格
 var InitTable = function () {
     var oInitTable = new Object();
-    oInitTable.Init = function () {        
+    oInitTable.Init = function () {
         $('#tb_order').bootstrapTable({
             url: srvUrl,//请求后台的URL（*）
             method: 'get',
@@ -73,19 +73,20 @@ var InitTable = function () {
             detailView: false,                   //是否显示父子表     
             idField: "orderID",
             onLoadSuccess: function () {
+                var oSendTable = new SendTable();
+                oSendTable.Init();               
                 $(".truck").click(function () {
                     var idx = $(this).attr("val");
                     var order = $("#tb_order").bootstrapTable('getData')[idx];
                     if (order == null) {
                         return;
                     }
-                    
+                    oSendTable.Reset(order.orderID);
+
+                    $('#myModal').modal({ backdrop: 'static' });
                 });
             },
             columns: [{
-                field: 'orderCode',
-                title: '合同编号'
-            }, {
                 field: 'buyer',
                 title: '甲方名称'
             }, {
@@ -108,7 +109,7 @@ var InitTable = function () {
                 }
             }, {
                 field: 'total',
-                title: '合同完成率'
+                title: '已发货面积'
             }, {
                 field: 'orderDate',
                 title: '合同时间',
@@ -125,6 +126,74 @@ var InitTable = function () {
     }
     return oInitTable;
 }
+
+var SendTable = function () {
+    var oSend = new Object();
+    oSend.Init = function () {
+        $('#tb_Send').bootstrapTable({
+            data: [],
+            striped: false,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: false,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式                
+            sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+            search: false,                       //是否显示表格搜索
+            strictSearch: false,
+            showColumns: false,                  //是否显示所有的列
+            showRefresh: false,                  //是否显示刷新按钮
+            clickToSelect: false,                //是否启用点击选中行
+            showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表     
+            idField: "orderDetailID",           
+            width: "600",
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'typeName',
+                title: '业务类型'
+            }, {
+                field: 'proName',
+                title: '产品类型'
+            }, {
+                field: 'spec',
+                title: '规格'
+            }, {
+                field: 'planNum',
+                title: '合同数量'
+            }, {
+                field: 'sendArea',
+                title: '已发货数量'
+            }, {
+                field: 'orderDetailID',
+                title: '发货数量',
+                width: "50",
+                formatter: function (val, row, idx) {
+                    return "<input type='text' id='txtnum" + row.orderDetailID + "'/>";
+                }
+            }]
+        });
+    };
+    oSend.Reset = function (orderId) {
+        var sendUrl = "/SendOrder/GetSendList/" + orderId;
+        $.ajax({
+            type: "get",
+            url: sendUrl,
+            dataType: "json",
+            success: function (d) {
+                $('#tb_Send').bootstrapTable('load', d);
+            },
+            error: function (err) {
+
+            },
+            complete: function () {
+
+            }
+        });
+    };
+    return oSend;
+};
 
 var ButtonInit = function () {
     var oInit = new Object();
@@ -149,6 +218,42 @@ var ButtonInit = function () {
             }
             srvUrl += parms;
             $("#tb_order").bootstrapTable('refresh', { 'url': srvUrl });
+        });
+
+        $("#myModalForm").find(".btn-primary").click(function () {
+            var arrselections = $("#tb_Send").bootstrapTable('getSelections');
+            var ids = [];
+            if (arrselections.length <= 0)
+            {
+                alert("请至少选择一项");
+                return;
+            }
+
+            $.each(arrselections, function (idx, arr) {
+                var num = $("#txtnum" + arr.orderDetailID).val();
+                ids.push({
+                    OrderDetailID: arr.orderDetailID,
+                    SendNum: num
+                });
+            });
+            var sendUrl = "/SendOrder/SendOrderAdd";
+            $.ajax({
+                type: "post",
+                url: sendUrl,
+                data:{
+                    data: JSON.stringify(ids)
+                },
+                dataType: "json",
+                success: function (d) {
+                    
+                },
+                error: function (err) {
+
+                },
+                complete: function () {
+
+                }
+            });
         });
     };
 

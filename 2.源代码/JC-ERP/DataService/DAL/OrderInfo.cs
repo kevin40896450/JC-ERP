@@ -44,11 +44,12 @@ namespace DataService.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into OrderInfo(");
-            strSql.Append("OrderID,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime)");
+            strSql.Append("OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime)");
             strSql.Append(" values (");
-            strSql.Append("@OrderID,@UserID,@Use_UserID,@Buyer,@ProName,@Province,@City,@Area,@Address,@remarks1,@remarks2,@IntoDate,@OrderDate,@IsCheck,@IsDel,@AddTime)");
+            strSql.Append("@OrderID,@OrderCode,@UserID,@Use_UserID,@Buyer,@ProName,@Province,@City,@Area,@Address,@remarks1,@remarks2,@IntoDate,@OrderDate,@IsCheck,@IsDel,@AddTime)");
             SqlParameter[] parameters = {
                     new SqlParameter("@OrderID", SqlDbType.Int,4),
+                    new SqlParameter("@OrderCode", SqlDbType.NVarChar,50),
                     new SqlParameter("@UserID", SqlDbType.Int,4),
                     new SqlParameter("@Use_UserID", SqlDbType.Int,4),
                     new SqlParameter("@Buyer", SqlDbType.VarChar,200),
@@ -65,21 +66,22 @@ namespace DataService.DAL
                     new SqlParameter("@IsDel", SqlDbType.Bit,1),
                     new SqlParameter("@AddTime", SqlDbType.DateTime)};
             parameters[0].Value = model.OrderID;
-            parameters[1].Value = model.UserID;
-            parameters[2].Value = model.Use_UserID;
-            parameters[3].Value = model.Buyer;
-            parameters[4].Value = model.ProName;
-            parameters[5].Value = model.Province;
-            parameters[6].Value = model.City;
-            parameters[7].Value = model.Area;
-            parameters[8].Value = model.Address;
-            parameters[9].Value = model.remarks1;
-            parameters[10].Value = model.remarks2;
-            parameters[11].Value = model.IntoDate;
-            parameters[12].Value = model.OrderDate;
-            parameters[13].Value = model.IsCheck;
-            parameters[14].Value = model.IsDel;
-            parameters[15].Value = model.AddTime;
+            parameters[1].Value = model.OrderCode;
+            parameters[2].Value = model.UserID;
+            parameters[3].Value = model.Use_UserID;
+            parameters[4].Value = model.Buyer;
+            parameters[5].Value = model.ProName;
+            parameters[6].Value = model.Province;
+            parameters[7].Value = model.City;
+            parameters[8].Value = model.Area;
+            parameters[9].Value = model.Address;
+            parameters[10].Value = model.remarks1;
+            parameters[11].Value = model.remarks2;
+            parameters[12].Value = model.IntoDate;
+            parameters[13].Value = model.OrderDate;
+            parameters[14].Value = model.IsCheck;
+            parameters[15].Value = model.IsDel;
+            parameters[16].Value = model.AddTime;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -98,6 +100,7 @@ namespace DataService.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update OrderInfo set ");
+            strSql.Append("OrderCode=@OrderCode,");
             strSql.Append("UserID=@UserID,");
             strSql.Append("Use_UserID=@Use_UserID,");
             strSql.Append("Buyer=@Buyer,");
@@ -115,6 +118,7 @@ namespace DataService.DAL
             strSql.Append("AddTime=@AddTime");
             strSql.Append(" where OrderID=@OrderID ");
             SqlParameter[] parameters = {
+                    new SqlParameter("@OrderCode", SqlDbType.NVarChar,50),
                     new SqlParameter("@UserID", SqlDbType.Int,4),
                     new SqlParameter("@Use_UserID", SqlDbType.Int,4),
                     new SqlParameter("@Buyer", SqlDbType.VarChar,200),
@@ -131,22 +135,23 @@ namespace DataService.DAL
                     new SqlParameter("@IsDel", SqlDbType.Bit,1),
                     new SqlParameter("@AddTime", SqlDbType.DateTime),
                     new SqlParameter("@OrderID", SqlDbType.Int,4)};
-            parameters[0].Value = model.UserID;
-            parameters[1].Value = model.Use_UserID;
-            parameters[2].Value = model.Buyer;
-            parameters[3].Value = model.ProName;
-            parameters[4].Value = model.Province;
-            parameters[5].Value = model.City;
-            parameters[6].Value = model.Area;
-            parameters[7].Value = model.Address;
-            parameters[8].Value = model.remarks1;
-            parameters[9].Value = model.remarks2;
-            parameters[10].Value = model.IntoDate;
-            parameters[11].Value = model.OrderDate;
-            parameters[12].Value = model.IsCheck;
-            parameters[13].Value = model.IsDel;
-            parameters[14].Value = model.AddTime;
-            parameters[15].Value = model.OrderID;
+            parameters[0].Value = model.OrderCode;
+            parameters[1].Value = model.UserID;
+            parameters[2].Value = model.Use_UserID;
+            parameters[3].Value = model.Buyer;
+            parameters[4].Value = model.ProName;
+            parameters[5].Value = model.Province;
+            parameters[6].Value = model.City;
+            parameters[7].Value = model.Area;
+            parameters[8].Value = model.Address;
+            parameters[9].Value = model.remarks1;
+            parameters[10].Value = model.remarks2;
+            parameters[11].Value = model.IntoDate;
+            parameters[12].Value = model.OrderDate;
+            parameters[13].Value = model.IsCheck;
+            parameters[14].Value = model.IsDel;
+            parameters[15].Value = model.AddTime;
+            parameters[16].Value = model.OrderID;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -209,7 +214,7 @@ namespace DataService.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 OrderID,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime from OrderInfo ");
+            strSql.Append("select  top 1 OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime from OrderInfo ");
             strSql.Append(" where OrderID=@OrderID ");
             SqlParameter[] parameters = {
                     new SqlParameter("@OrderID", SqlDbType.Int,4)           };
@@ -239,6 +244,10 @@ namespace DataService.DAL
                 if (row["OrderID"] != null && row["OrderID"].ToString() != "")
                 {
                     model.OrderID = int.Parse(row["OrderID"].ToString());
+                }
+                if (row["OrderCode"] != null)
+                {
+                    model.OrderCode = row["OrderCode"].ToString();
                 }
                 if (row["UserID"] != null && row["UserID"].ToString() != "")
                 {
@@ -324,7 +333,7 @@ namespace DataService.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select OrderID,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime ");
+            strSql.Append("select OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime ");
             strSql.Append(" FROM OrderInfo ");
             if (strWhere.Trim() != "")
             {
@@ -344,7 +353,7 @@ namespace DataService.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" OrderID,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime ");
+            strSql.Append(" OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime ");
             strSql.Append(" FROM OrderInfo ");
             if (strWhere.Trim() != "")
             {

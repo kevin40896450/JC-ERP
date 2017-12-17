@@ -11,6 +11,7 @@ namespace DataService.Model
         { }
         #region Model
         private int _orderid;
+        private string _ordercode;
         private int _userid;
         private int _use_userid;
         private string _buyer;
@@ -33,6 +34,14 @@ namespace DataService.Model
         {
             set { _orderid = value; }
             get { return _orderid; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string OrderCode
+        {
+            set { _ordercode = value; }
+            get { return _ordercode; }
         }
         /// <summary>
         /// 用户编号

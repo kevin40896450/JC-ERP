@@ -30,7 +30,7 @@
     <!-- cxselect -->
     <script src="/Content/plugins/cxselect/jquery.cxselect.js"></script>
     <!-- page script -->
-    <script src="~/Content/Scripts/Order/OrderList.js"></script>
+    <script src="~/Content/Scripts/SendOrder/SendOrderList.js"></script>
 }
 
 <section class="content-header">
@@ -99,3 +99,26 @@
     </div>
 </section>
 <!-- /.content -->
+
+<div class="modal" id="myModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document" style="width:80%;">
+        <form class="form-horizontal" id="myModalForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">添加发货</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <table id="tb_Send"></table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div>

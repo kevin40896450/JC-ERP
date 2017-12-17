@@ -42,7 +42,7 @@ namespace JC_ERP.Modules.SendOrder
                 return Response.AsJson(types);
             };
 
-            Post[RouteDictionary.Add] = p =>
+            Post[RouteDictionary.SendOrderAdd] = p =>
             {
                 string buyer = Request.Form["buyer"].Value;//甲方名称
                 string proName = Request.Form["proName"].Value;//项目名称
@@ -62,7 +62,7 @@ namespace JC_ERP.Modules.SendOrder
                 info.Area = Area;
                 info.Buyer = buyer;
                 info.City = City;
-                if(!String.IsNullOrEmpty(intodate))
+                if (!String.IsNullOrEmpty(intodate))
                 {
                     info.IntoDate = DateTime.Parse(intodate);
                 }
@@ -74,6 +74,7 @@ namespace JC_ERP.Modules.SendOrder
                 info.Use_UserID = Int32.Parse(selUsers);
                 UserIdentity user = (UserIdentity)Context.CurrentUser;
                 info.UserID = user.UserID;
+
 
                 OrderSource order = new OrderSource();
                 ResponseModel model = new ResponseModel();
@@ -136,6 +137,18 @@ namespace JC_ERP.Modules.SendOrder
                 NavManager mgr = new NavManager();
                 NavInfo nav = mgr.CreateNav(Request.Path, user.Menus);
                 return View[ViewDictionary.SendOrderList, nav];
+            };
+
+            Get[RouteDictionary.GetSendList] = p =>
+            {
+                int id = 0;
+                List<v_OrderDetail> list = new List<v_OrderDetail>();
+                if (Int32.TryParse(p.id,out id))
+                {
+                    DataService.BLL.v_OrderDetail BOrder = new DataService.BLL.v_OrderDetail();
+                    list.AddRange(BOrder.GetModelList("OrderID = " + id));
+                }
+                return Response.AsJson(list);
             };
         }
     }

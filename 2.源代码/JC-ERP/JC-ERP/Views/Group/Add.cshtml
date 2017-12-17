@@ -1,0 +1,99 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Security.NavInfo>
+
+@{
+    ViewBag.Title = "添加发货单";
+    Layout = "Shared/_Layout.cshtml";
+}
+
+@section style{
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/Content/plugins/iCheck/all.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/Content/plugins/select2/select2.min.css">
+    <!-- DataTables -->
+    <link href="/Content/plugins/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/plugins/Validator/bootstrapValidator.min.css">
+}
+@section scripts{
+<script src="/Content/plugins/Validator/bootstrapValidator.js"></script>
+    <!-- iCheck -->
+    <script src="/Content/plugins/iCheck/icheck.min.js"></script>
+    <!-- Inputmask -->
+    <script src="/Content/plugins/Inputmask/inputmask.js"></script>
+    <script src="/Content/plugins/Inputmask/inputmask.numeric.extensions.js"></script>
+    <script src="/Content/plugins/Inputmask/jquery.inputmask.js"></script>
+    <!-- Select2 -->
+    <script src="/Content/plugins/select2/select2.full.min.js"></script> 
+    <!-- page script -->
+    <script src="~/Content/Scripts/Group/AddGroup.js"></script>
+}
+
+<section class="content-header">
+    <h1>
+        @Model.Title
+    </h1>
+    <ol class="breadcrumb">
+        @Html.Raw(Model.Nav)
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- interactive chart -->
+            <div class="box box-line">
+
+                <form class="form-horizontal" id="myForm" action="/group/add">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">分组名称:</label>
+
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="groupName" name="groupName">
+                            </div>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="col-sm-2 control-label">组长:</label>
+
+                            <div class="col-sm-4">
+                                <select class="form-control select2" id="selUser" name="selUser" style="width:100%;"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">组员:</label>
+
+                            <div class="col-sm-10">
+                                <select class="form-control select2" id="selMember" name="selMember" style="width:100%;color:#fff" multiple></select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" id="btnAdd" class="btn btn-primary">提交</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+    <div class="modal" id="myAlert" role="dialog" aria-labelledby="gridSystemModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="myAlertLabel">成功</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+
+        </div><!-- /.modal-dialog -->
+    </div>
+</section>
+<!-- /.content -->

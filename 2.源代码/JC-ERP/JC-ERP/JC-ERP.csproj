@@ -513,8 +513,12 @@
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.css" />
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.js" />
     <Content Include="Content\Scripts\Common.js" />
+    <Content Include="Content\Scripts\Group\AddGroup.js" />
+    <Content Include="Content\Scripts\Group\GroupList.js" />
     <Content Include="Content\Scripts\Order\AddOrder.js" />
     <Content Include="Content\Scripts\Order\OrderList.js" />
+    <Content Include="Content\Scripts\SendOrder\AddSendOrder.js" />
+    <Content Include="Content\Scripts\SendOrder\SendOrderList.js" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css.map" />
@@ -539,6 +543,8 @@
     <Content Include="Views\Order\OrderList.cshtml" />
     <Content Include="Views\SendOrder\AddSendOrder.cshtml" />
     <Content Include="Views\SendOrder\SendOrderList.cshtml" />
+    <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Views\Group\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -554,10 +560,12 @@
     <Compile Include="Conventions\CustomBootstrapper.cs" />
     <Compile Include="Conventions\UserIdentity.cs" />
     <Compile Include="Conventions\UserMapper.cs" />
+    <Compile Include="Model\GroupPageModel.cs" />
     <Compile Include="Model\OrderPageModel.cs" />
     <Compile Include="Model\PageBase.cs" />
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Modules\CommonModule.cs" />
+    <Compile Include="Modules\Group\IndexModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Modules\Order\IndexModule.cs" />
@@ -584,7 +592,9 @@
       <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\plugins\jsTree\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

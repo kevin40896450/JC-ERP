@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\GroupInfoDto.cs" />
     <Compile Include="DTO\IAggregateRoot.cs" />
     <Compile Include="DTO\MenuTreeDTO.cs" />
     <Compile Include="DTO\OrderDetailDTO.cs" />
     <Compile Include="DTO\OrderInfoDTO.cs" />
     <Compile Include="DTO\ProductTypeDTO.cs" />
+    <Compile Include="DTO\SendOrderAddDTO.cs" />
+    <Compile Include="DTO\SendOrderDetailInputDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Respository\GroupSource.cs" />
     <Compile Include="Respository\OrderSource.cs" />
     <Compile Include="Respository\ProductTypeSource.cs" />
   </ItemGroup>

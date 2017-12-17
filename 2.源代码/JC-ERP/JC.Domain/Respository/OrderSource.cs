@@ -21,6 +21,7 @@ namespace JC.Domain.Respository
             List<TransModel> models = new List<TransModel>();
             order.OrderID = Border.GetMaxId();
             order.AddTime = thisTime;
+            order.OrderCode = CreateOrderCode(order);
             models.Add(Border.CreateAddSql(order));
             int detailID = BDetail.GetMaxId();
             foreach (OrderDetailDTO d in details)
@@ -71,6 +72,25 @@ namespace JC.Domain.Respository
             order.total = detail.Total;
             order.UpTime = DateTime.Now;
             return order;
+        }
+
+        /// <summary>
+        /// 创建订单编号
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string CreateOrderCode(OrderInfo info)
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append(info.AddTime.ToString("yyyyMMdd"));
+            str.Append(info.Use_UserID.ToString().PadLeft(4, '0'));
+            str.Append(info.OrderID.ToString().PadLeft(4, '0'));
+            return str.ToString();
+        }
+
+        public void AddSendOrder(List<SendOrderDetailInputDTO> input)
+        {
+
         }
     }
 

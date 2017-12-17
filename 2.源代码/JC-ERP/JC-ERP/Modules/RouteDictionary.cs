@@ -61,6 +61,18 @@ namespace JC_ERP.Modules
 
         #region 发货页面路由
         public const string SendOrderBase = "/SendOrder";
+
+        /// <summary>
+        /// 获取发货明细列表
+        /// </summary>
+        public const string GetSendList = "GetSendList/{id:int}";
+
+        public const string SendOrderAdd = "SendOrderAdd";
+        #endregion
+
+        #region 
+        public const string GroupBase = "/Group";
+        
         #endregion
     }
 }

@@ -5,25 +5,25 @@ using System.Data.SqlClient;
 namespace DataService.DAL
 {
     /// <summary>
-    /// 数据访问类:v_Order
+    /// 数据访问类:v_OrderDetail
     /// </summary>
-    public partial class v_Order
+    public partial class v_OrderDetail
     {
-        public v_Order()
+        public v_OrderDetail()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(int OrderID)
+        public bool Exists(int OrderDetailID)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) from v_Order");
-            strSql.Append(" where OrderID=@OrderID ");
+            strSql.Append("select count(1) from v_OrderDetail");
+            strSql.Append(" where OrderDetailID=@OrderDetailID ");
             SqlParameter[] parameters = {
-                    new SqlParameter("@OrderID", SqlDbType.Int,4)           };
-            parameters[0].Value = OrderID;
+                    new SqlParameter("@OrderDetailID", SqlDbType.Int,4)         };
+            parameters[0].Value = OrderDetailID;
 
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
@@ -32,17 +32,17 @@ namespace DataService.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public DataService.Model.v_Order GetModel(int OrderID)
+        public DataService.Model.v_OrderDetail GetModel(int OrderDetailID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime,TotalNum,total from v_Order ");
-            strSql.Append(" where OrderID=@OrderID ");
+            strSql.Append("select  top 1 OrderDetailID,OrderID,ProTypeID,Spec,PlanNum,Price,total,Remark,FinishNum,OrderStatus,UpTime,TypeName,ProName,SendArea,RealArea from v_OrderDetail ");
+            strSql.Append(" where OrderDetailID=@OrderDetailID ");
             SqlParameter[] parameters = {
-                    new SqlParameter("@OrderID", SqlDbType.Int,4)           };
-            parameters[0].Value = OrderID;
+                    new SqlParameter("@OrderDetailID", SqlDbType.Int,4)         };
+            parameters[0].Value = OrderDetailID;
 
-            DataService.Model.v_Order model = new DataService.Model.v_Order();
+            DataService.Model.v_OrderDetail model = new DataService.Model.v_OrderDetail();
             DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -58,100 +58,70 @@ namespace DataService.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public DataService.Model.v_Order DataRowToModel(DataRow row)
+        public DataService.Model.v_OrderDetail DataRowToModel(DataRow row)
         {
-            DataService.Model.v_Order model = new DataService.Model.v_Order();
+            DataService.Model.v_OrderDetail model = new DataService.Model.v_OrderDetail();
             if (row != null)
             {
+                if (row["OrderDetailID"] != null && row["OrderDetailID"].ToString() != "")
+                {
+                    model.OrderDetailID = int.Parse(row["OrderDetailID"].ToString());
+                }
                 if (row["OrderID"] != null && row["OrderID"].ToString() != "")
                 {
                     model.OrderID = int.Parse(row["OrderID"].ToString());
                 }
-                if (row["OrderCode"] != null)
+                if (row["ProTypeID"] != null && row["ProTypeID"].ToString() != "")
                 {
-                    model.OrderCode = row["OrderCode"].ToString();
+                    model.ProTypeID = int.Parse(row["ProTypeID"].ToString());
                 }
-                if (row["UserID"] != null && row["UserID"].ToString() != "")
+                if (row["Spec"] != null)
                 {
-                    model.UserID = int.Parse(row["UserID"].ToString());
+                    model.Spec = row["Spec"].ToString();
                 }
-                if (row["Use_UserID"] != null && row["Use_UserID"].ToString() != "")
+                if (row["PlanNum"] != null && row["PlanNum"].ToString() != "")
                 {
-                    model.Use_UserID = int.Parse(row["Use_UserID"].ToString());
+                    model.PlanNum = decimal.Parse(row["PlanNum"].ToString());
                 }
-                if (row["Buyer"] != null)
+                if (row["Price"] != null && row["Price"].ToString() != "")
                 {
-                    model.Buyer = row["Buyer"].ToString();
+                    model.Price = decimal.Parse(row["Price"].ToString());
+                }
+                if (row["total"] != null && row["total"].ToString() != "")
+                {
+                    model.total = decimal.Parse(row["total"].ToString());
+                }
+                if (row["Remark"] != null)
+                {
+                    model.Remark = row["Remark"].ToString();
+                }
+                if (row["FinishNum"] != null && row["FinishNum"].ToString() != "")
+                {
+                    model.FinishNum = decimal.Parse(row["FinishNum"].ToString());
+                }
+                if (row["OrderStatus"] != null && row["OrderStatus"].ToString() != "")
+                {
+                    model.OrderStatus = int.Parse(row["OrderStatus"].ToString());
+                }
+                if (row["UpTime"] != null && row["UpTime"].ToString() != "")
+                {
+                    model.UpTime = DateTime.Parse(row["UpTime"].ToString());
+                }
+                if (row["TypeName"] != null)
+                {
+                    model.TypeName = row["TypeName"].ToString();
                 }
                 if (row["ProName"] != null)
                 {
                     model.ProName = row["ProName"].ToString();
                 }
-                if (row["Province"] != null)
+                if (row["SendArea"] != null && row["SendArea"].ToString() != "")
                 {
-                    model.Province = row["Province"].ToString();
+                    model.SendArea = decimal.Parse(row["SendArea"].ToString());
                 }
-                if (row["City"] != null)
+                if (row["RealArea"] != null && row["RealArea"].ToString() != "")
                 {
-                    model.City = row["City"].ToString();
-                }
-                if (row["Area"] != null)
-                {
-                    model.Area = row["Area"].ToString();
-                }
-                if (row["Address"] != null)
-                {
-                    model.Address = row["Address"].ToString();
-                }
-                if (row["remarks1"] != null)
-                {
-                    model.remarks1 = row["remarks1"].ToString();
-                }
-                if (row["remarks2"] != null)
-                {
-                    model.remarks2 = row["remarks2"].ToString();
-                }
-                if (row["IntoDate"] != null && row["IntoDate"].ToString() != "")
-                {
-                    model.IntoDate = DateTime.Parse(row["IntoDate"].ToString());
-                }
-                if (row["OrderDate"] != null && row["OrderDate"].ToString() != "")
-                {
-                    model.OrderDate = DateTime.Parse(row["OrderDate"].ToString());
-                }
-                if (row["IsCheck"] != null && row["IsCheck"].ToString() != "")
-                {
-                    if ((row["IsCheck"].ToString() == "1") || (row["IsCheck"].ToString().ToLower() == "true"))
-                    {
-                        model.IsCheck = true;
-                    }
-                    else
-                    {
-                        model.IsCheck = false;
-                    }
-                }
-                if (row["IsDel"] != null && row["IsDel"].ToString() != "")
-                {
-                    if ((row["IsDel"].ToString() == "1") || (row["IsDel"].ToString().ToLower() == "true"))
-                    {
-                        model.IsDel = true;
-                    }
-                    else
-                    {
-                        model.IsDel = false;
-                    }
-                }
-                if (row["AddTime"] != null && row["AddTime"].ToString() != "")
-                {
-                    model.AddTime = DateTime.Parse(row["AddTime"].ToString());
-                }
-                if (row["TotalNum"] != null && row["TotalNum"].ToString() != "")
-                {
-                    model.TotalNum = decimal.Parse(row["TotalNum"].ToString());
-                }
-                if (row["total"] != null && row["total"].ToString() != "")
-                {
-                    model.total = decimal.Parse(row["total"].ToString());
+                    model.RealArea = decimal.Parse(row["RealArea"].ToString());
                 }
             }
             return model;
@@ -163,8 +133,8 @@ namespace DataService.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime,TotalNum,total ");
-            strSql.Append(" FROM v_Order ");
+            strSql.Append("select OrderDetailID,OrderID,ProTypeID,Spec,PlanNum,Price,total,Remark,FinishNum,OrderStatus,UpTime,TypeName,ProName,SendArea,RealArea ");
+            strSql.Append(" FROM v_OrderDetail ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -183,8 +153,8 @@ namespace DataService.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" OrderID,OrderCode,UserID,Use_UserID,Buyer,ProName,Province,City,Area,Address,remarks1,remarks2,IntoDate,OrderDate,IsCheck,IsDel,AddTime,TotalNum,total ");
-            strSql.Append(" FROM v_Order ");
+            strSql.Append(" OrderDetailID,OrderID,ProTypeID,Spec,PlanNum,Price,total,Remark,FinishNum,OrderStatus,UpTime,TypeName,ProName,SendArea,RealArea ");
+            strSql.Append(" FROM v_OrderDetail ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -199,7 +169,7 @@ namespace DataService.DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM v_Order ");
+            strSql.Append("select count(1) FROM v_OrderDetail ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -228,9 +198,9 @@ namespace DataService.DAL
             }
             else
             {
-                strSql.Append("order by T.OrderID desc");
+                strSql.Append("order by T.OrderDetailID desc");
             }
-            strSql.Append(")AS Row, T.*  from v_Order T ");
+            strSql.Append(")AS Row, T.*  from v_OrderDetail T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -255,8 +225,8 @@ namespace DataService.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "v_Order";
-			parameters[1].Value = "OrderID";
+			parameters[0].Value = "v_OrderDetail";
+			parameters[1].Value = "OrderDetailID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

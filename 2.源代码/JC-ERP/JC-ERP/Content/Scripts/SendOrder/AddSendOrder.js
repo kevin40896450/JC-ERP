@@ -60,8 +60,7 @@ $(document).ready(function () {
             if (data.isValid()) {
                 var action = $form.attr("action");
                 var postdata = $form.serializeArray();
-                if ($("#Province").val()=="")
-                {
+                if ($("#Province").val() == "") {
                     $("#myAlertLabel").html("请选择省份!");
                     $('#myAlert').modal();
                     $("#btnAdd").removeAttr("disabled");
@@ -81,8 +80,7 @@ $(document).ready(function () {
                 }
 
                 var tableData = $("#tb_data").bootstrapTable('getData');
-                if (tableData.length == 0)
-                {
+                if (tableData.length == 0) {
                     $("#myAlertLabel").html("请录入产品清单!");
                     $('#myAlert').modal();
                     $("#btnAdd").removeAttr("disabled");
@@ -92,12 +90,9 @@ $(document).ready(function () {
                 $.post(action, postdata
                     ).done(function (doc) {
                         if (doc.statusCode == 200) {
-                            $("#myAlertLabel").html("添加成功!");
-                            $('#myAlert').modal();
                             window.location.href = "/Order/List";
                         }
-                        else
-                        {
+                        else {
                             $("#myAlertLabel").html("添加失败！" + doc.message);
                             $('#myAlert').modal();
                         }
@@ -183,7 +178,7 @@ var InitForm = function () {
                 invalid: 'glyphicon glyphicon-remove',
                 validating: 'glyphicon glyphicon-refresh'
             },
-            fields: {                
+            fields: {
                 Total: {
                     validators: {
                         notEmpty: {
@@ -215,7 +210,7 @@ var InitForm = function () {
 //初始化产品类型表格
 var InitTable = function () {
     var oInitTable = new Object();
-    oInitTable.Init = function () {        
+    oInitTable.Init = function () {
         $('#tb_data').bootstrapTable({
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: false,                      //是否显示行间隔色
@@ -301,14 +296,13 @@ var ButtonInit = function () {
                 values: ids
             });
             tempNum = tempNum - arrselections.length;
-            for (var i = 0; i < tempNum; i++)
-            {
+            for (var i = 0; i < tempNum; i++) {
                 $("#tb_data").bootstrapTable('updateCell', {
                     index: i,
                     field: 'id',
                     values: i + 1
                 });
-            }            
+            }
         });
 
         $("#PlanNum").bind("blur", function () {
@@ -319,13 +313,12 @@ var ButtonInit = function () {
             GetTotal();
         });
 
-        function GetTotal()
-        {
+        function GetTotal() {
             var num = parseFloat($("#PlanNum").val());
             var price = parseFloat($("#price").val());
             if (!isNaN(num) && !isNaN(price)) {
                 var total = num * price;
-                $("#Total").val(total.toFixed("2"));
+                $("#Total").val(total.toFixed("0"));
             }
         }
 
@@ -346,7 +339,7 @@ var ButtonInit = function () {
                     var total = $("#Total").val();
                     var remark = $("#remark").val();
                     var newrow = new Object();
-                    newrow.id= tempNum + 1;
+                    newrow.id = tempNum + 1;
                     newrow.ProTypeID = pid;
                     newrow.TypeName = tname;
                     newrow.ProName = pname;
@@ -369,8 +362,7 @@ var ButtonInit = function () {
     return oInit;
 };
 
-var ProType = function()
-{
+var ProType = function () {
     var oPro = new Object();
     oPro.Init = function (bizType) {
         var srvUrl = "/Order/ProType/List/" + bizType;
@@ -397,8 +389,8 @@ var ProType = function()
                         var groupID = obj.val;
                         $("#Spec").val("");
                         $("#Spec").attr("gid", id);
-                        SetProType(groupID);                        
-                });
+                        SetProType(groupID);
+                    });
             }
         }).fail(function (err) {
             // alert("error");
@@ -406,19 +398,17 @@ var ProType = function()
 
         });
 
-        function SetProType(typeID)
-        {
+        function SetProType(typeID) {
             $("#Spec").attr("disabled", false);
             var IsAuto = false;//是否启用自动计算
-            switch(typeID)
-            {
+            switch (typeID) {
                 case 1:
-                    Inputmask("99K99K99P").mask("#Spec");
-                    $("#PlanNum").inputmask("decimal", { "placeholder": "栋" });
+                    Inputmask("99K99K99P99栋9梯").mask("#Spec");
+                    $("#PlanNum").inputmask("decimal", { "placeholder": "平方米" });
                     IsAuto = true;
                     break;
                 case 2:
-                    Inputmask("长99.9米X宽99.9米").mask("#Spec");
+                    Inputmask("长99.9米X宽9米X9个").mask("#Spec");
                     $("#PlanNum").inputmask("decimal", { "placeholder": "个" });
                     break;
                 case 3:
@@ -434,15 +424,13 @@ var ProType = function()
                     $("#PlanNum").inputmask("decimal", { "placeholder": "元" });
                     break;
             }
-            if (IsAuto)
-            {
+            if (IsAuto) {
                 $("#Spec").bind("blur", { d: typeID }, function (e) {
                     var id = e.data.d;
                     $("#PlanNum").val(id);
                 });
             }
-            else
-            {
+            else {
                 $("#Spec").unbind("blur");
             }
         }

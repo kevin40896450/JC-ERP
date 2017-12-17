@@ -35,5 +35,16 @@ namespace JC_ERP.Modules
         /// </summary>
         public const string SendOrderList = "/SendOrder/SendOrderList";
         #endregion
+
+        #region 发货组相关
+        /// <summary>
+        /// 查询发货组
+        /// </summary>
+        public const string GroupList = "/Group/List";
+        /// <summary>
+        /// 添加发货组
+        /// </summary>
+        public const string GroupAdd = "/Group/Add";
+        #endregion
     }
 }
