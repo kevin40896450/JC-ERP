@@ -4,9 +4,6 @@ $(document).ready(function () {
     var oForm = new InitForm();
     oForm.Init();
    
-    var oButtonInit = new ButtonInit();
-   // oButtonInit.Init();
-
     $('#myForm').bootstrapValidator({
         //        live: 'disabled',
         message: 'This value is not valid',

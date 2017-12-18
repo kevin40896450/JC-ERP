@@ -4,6 +4,9 @@
 
     var oTable = new InitTable();
     oTable.Init();
+
+    var oButtonInit = new ButtonInit();
+    oButtonInit.Init();
 });
 
 var srvUrl = "/Group/Get";
@@ -41,7 +44,8 @@ var InitTable = function () {
                     if (order == null) {
                         return;
                     }
-
+                    var oModalInit = new ModalInit(order);
+                    oModalInit.init();
                     $('#myModal').modal({ backdrop: 'static' });
                 });
             },
@@ -79,10 +83,6 @@ var InitForm = function () {
             dataType: "json",
             success: function (d) {
                 var arrs = [];
-                arrs.push({
-                    id: 0,
-                    text: "全部"
-                });
                 arrs = arrs.concat(d);
                 $("#selUser").select2({
                     data: arrs
@@ -101,31 +101,79 @@ var InitForm = function () {
     return oInitForm;
 }
 
+var ModalInit = function (model) {
+    var oModal = new Object();
+    oModal.model = model;
+    oModal.init = function () {
+        $("#groupName").val(this.model.groupName);
+        $("#selUser").val(this.model.userID).trigger("change");
+        var ids = this.model.userIds.split(",");
+        $("#selMember").val(ids).trigger("change");
+        $("#groupEdit").val(this.model.groupID);
+        var m = this.model;
+        $("#myModal").find(".btn-primary").unbind("click").bind("click", function () {            
+            var gid = $("#groupEdit").val();
+            var action = $('#myModalForm').attr("action");
+            var postdata = $('#myModalForm').serializeArray();
+            postdata.push({ name: "id", value: gid });
+            $.post(action, postdata
+                ).done(function (doc) {
+                    if (doc.statusCode == 200) {
+                        $("#myAlertLabel").html("修改成功！");
+                        $('#myAlert').modal();
+                        $('#myModal').modal('hide');
+                        $("#tb_group").bootstrapTable('refresh', { 'url': srvUrl });
+                    }
+                    else {
+                        $("#myAlertLabel").html("修改失败！" + doc.message);
+                        $('#myAlert').modal();
+                    }
+                }).fail(function (ex) {
+                }).always(function () {
+
+                });
+        });
+    };
+    return oModal;
+}
 var ButtonInit = function () {
     var oInit = new Object();
-    var postdata = {};
-    var srvSubmitUrl = "";
     oInit.Init = function () {
-        $("#btnSearch").click(function () {
-            srvUrl = "/Order/Get";
-            var buyer = $('#buyer').val();
-            var proName = $('#proName').val();
-            var selUsers = $('#selUsers').val();
-            srvUrl += "?t=" + new Date().getTime();
-            var parms = "";
-            if (buyer != "") {
-                parms += "&buyer=" + buyer;
+        $("#btn_del").click(function () {
+            if (!confirm("是否确认删除所选分组？"))
+                return;
+            var u = "/Group/Del";
+            var arrselections = $("#tb_group").bootstrapTable('getSelections');
+            var ids = [];
+            if (arrselections.length <= 0) {
+                alert("请至少选择一项");
+                return;
             }
-            if (proName != "") {
-                parms += "&p=" + proName;
-            }
-            if (selUsers != "0") {
-                parms += "&u=" + selUsers;
-            }
-            srvUrl += parms;
-            $("#tb_order").bootstrapTable('refresh', { 'url': srvUrl });
+            $.each(arrselections, function (idx, arr) {
+                ids.push({
+                    name: "ids",
+                    value: arr.groupID
+                });
+            });
+            $.post(u, ids
+               ).done(function (doc) {
+                   if (doc.statusCode == 200) {
+                       $("#myAlertLabel").html("删除成功！");
+                       $('#myAlert').modal();
+                       $('#myModal').modal('hide');
+                       $("#tb_group").bootstrapTable('refresh', { 'url': srvUrl });
+                   }
+                   else {
+                       $("#myAlertLabel").html("删除成功！" + doc.message);
+                       $('#myAlert').modal();
+                   }
+               }).fail(function (ex) {
+               }).always(function () {
+
+               });
         });
     };
 
     return oInit;
 };
+

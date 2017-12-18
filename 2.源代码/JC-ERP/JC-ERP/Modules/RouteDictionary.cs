@@ -33,16 +33,18 @@ namespace JC_ERP.Modules
 
         #endregion
 
+        public const string Add = "/add";
+
+        public const string Edit = "/edit";
+
+        public const string Del = "Del";
+
         #region 订单页面路由
         public const string OrderBase = "/order";
         /// <summary>
         /// 订单首页
         /// </summary>
         public const string OrderIndex = "/index";
-        /// <summary>
-        /// 添加订单
-        /// </summary>
-        public const string Add = "/add";
         /// <summary>
         /// 查询合同
         /// </summary>
