@@ -86,12 +86,7 @@ namespace JC.Domain.Respository
             str.Append(info.Use_UserID.ToString().PadLeft(4, '0'));
             str.Append(info.OrderID.ToString().PadLeft(4, '0'));
             return str.ToString();
-        }
-
-        public void AddSendOrder(List<SendOrderDetailInputDTO> input)
-        {
-
-        }
+        }        
     }
 
     public enum OrderStatus

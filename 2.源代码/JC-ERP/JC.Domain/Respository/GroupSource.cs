@@ -42,6 +42,33 @@ namespace JC.Domain.Respository
             return summary;
         }
 
+        public Summary<GroupInfoDto> GetPageGroups(string strWhere, string orderby)
+        {
+            var summary = new Summary<GroupInfoDto>();
+            List<GroupInfoDto> grouplist = new List<GroupInfoDto>();
+            List<UserGroup> list = BGroup.GetModelList(strWhere + " order by " + orderby);
+            List<UserInfo> userList = BUser.GetModelList("");
+            GroupInfoDto dto = null;
+            foreach (UserGroup group in list)
+            {
+                dto = new GroupInfoDto();
+                dto.AddTime = group.AddTime;
+                dto.GroupID = group.GroupID;
+                dto.GroupName = group.GroupName;
+                dto.UserID = group.UserID;
+                dto.UserIds = group.Users;
+                List<UserInfo> users = userList.Where(m => group.Users.Contains(m.UserID.ToString())).ToList();
+                foreach (UserInfo info in users)
+                {
+                    dto.Users += info.RealName + ",";
+                }
+                dto.Users = dto.Users.TrimEnd(',');
+                grouplist.Add(dto);
+            }
+            summary.rows = grouplist;
+            return summary;
+        }
+
         public bool AddGroup(UserGroup model)
         {
             model.GroupID = BGroup.GetMaxId();

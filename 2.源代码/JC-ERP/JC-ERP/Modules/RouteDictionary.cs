@@ -37,7 +37,9 @@ namespace JC_ERP.Modules
 
         public const string Edit = "/edit";
 
-        public const string Del = "Del";
+        public const string Del = "/Del";
+
+        public const string All = "/All";
 
         #region 订单页面路由
         public const string OrderBase = "/order";
@@ -74,7 +76,6 @@ namespace JC_ERP.Modules
 
         #region 
         public const string GroupBase = "/Group";
-        
         #endregion
     }
 }

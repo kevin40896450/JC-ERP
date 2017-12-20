@@ -167,6 +167,13 @@ namespace JC_ERP.Modules.Group
                 }
                 return Response.AsJson(model);
             };
+
+            Get[RouteDictionary.All] = p =>
+            {
+                GroupSource source = new GroupSource();
+                var list = source.GetPageGroups("1=1", "GroupID desc");
+                return Response.AsJson(list);
+            };
         }
     }
 }

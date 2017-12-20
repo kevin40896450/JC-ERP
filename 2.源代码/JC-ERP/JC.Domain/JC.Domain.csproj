@@ -53,6 +53,7 @@
     <Compile Include="Respository\GroupSource.cs" />
     <Compile Include="Respository\OrderSource.cs" />
     <Compile Include="Respository\ProductTypeSource.cs" />
+    <Compile Include="Respository\SendOrderSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataService\DataService.csproj">

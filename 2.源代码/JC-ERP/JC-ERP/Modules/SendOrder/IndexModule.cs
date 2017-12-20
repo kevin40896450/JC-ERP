@@ -44,50 +44,30 @@ namespace JC_ERP.Modules.SendOrder
 
             Post[RouteDictionary.SendOrderAdd] = p =>
             {
-                string buyer = Request.Form["buyer"].Value;//甲方名称
-                string proName = Request.Form["proName"].Value;//项目名称
-                string orderdate = Request.Form["orderdate"].Value;//下单日期
-                string intodate = Request.Form["intodate"].Value;//进场日期
-                string Province = Request.Form["Province"].Value;//省
-                string City = Request.Form["City"].Value;//市
-                string Area = Request.Form["Area"].Value;//区
-                string address = Request.Form["address"].Value;//详细地址
-                string selUsers = Request.Form["selUsers"].Value;//业务员
-                string remarks1 = Request.Form["remarks1"].Value;//付款方式
-                string remarks2 = Request.Form["remarks2"].Value;//备注
-                string json = Request.Form["data"].Value;
-                List<OrderDetailDTO> list = JsonHelper.ParseFromJson(json, typeof(List<OrderDetailDTO>)) as List<OrderDetailDTO>;
-                OrderInfoDTO info = new OrderInfoDTO();
-                info.Address = address;
-                info.Area = Area;
-                info.Buyer = buyer;
-                info.City = City;
-                if (!String.IsNullOrEmpty(intodate))
-                {
-                    info.IntoDate = DateTime.Parse(intodate);
-                }
-                info.OrderDate = DateTime.Parse(orderdate);
-                info.ProName = proName;
-                info.Province = Province;
-                info.remarks1 = remarks1;
-                info.remarks2 = remarks2;
-                info.Use_UserID = Int32.Parse(selUsers);
-                UserIdentity user = (UserIdentity)Context.CurrentUser;
-                info.UserID = user.UserID;
-
-
-                OrderSource order = new OrderSource();
+                string group = Request.Form["groupId"].Value;
+                int groupId = 0;
                 ResponseModel model = new ResponseModel();
-                try
-                {
-                    order.AddOrder(info, list);
-                    model.StatusCode = HttpStatusCode.OK;
-                }
-                catch(Exception ex)
+                if (String.IsNullOrEmpty(group) || Int32.TryParse(group, out groupId))
                 {
                     model.StatusCode = HttpStatusCode.BadGateway;
-                    model.Message = ex.Message;
+                    model.Message = "数据异常";
                 }
+                else
+                {
+                    string json = Request.Form["data"].Value;
+                    List<SendOrderAddDTO> list = JsonHelper.ParseFromJson(json, typeof(List<SendOrderAddDTO>)) as List<SendOrderAddDTO>;
+                    SendOrderSource send = new SendOrderSource();
+                    try
+                    {
+                        send.AddSendOrder(groupId, list);
+                        model.StatusCode = HttpStatusCode.OK;
+                    }
+                    catch (Exception ex)
+                    {
+                        model.StatusCode = HttpStatusCode.BadGateway;
+                        model.Message = ex.Message;
+                    }
+                }                
                 return Response.AsJson(model);
             };
 

@@ -175,6 +175,32 @@ var SendTable = function () {
             }]
         });
     };
+
+    oSend.LoadGroup = function () {
+        var srvUrl = "/Group/All";
+        //加载用户下拉菜单
+        $.ajax({
+            type: "get",
+            url: srvUrl,
+            dataType: "json",
+            success: function (d) {
+                var arrs = [];
+                $.each(d.rows, function (idx, item) {
+                    arrs.push({
+                        id: item.groupID,
+                        text: item.groupName
+                    });
+                });
+                $("#selGroup").select2({
+                    data: arrs
+                });
+            }
+        }).fail(function (err) {
+            // alert("error");
+        }).always(function () {
+
+        });
+    };
     oSend.Reset = function (orderId) {
         var sendUrl = "/SendOrder/GetSendList/" + orderId;
         $.ajax({
@@ -183,6 +209,8 @@ var SendTable = function () {
             dataType: "json",
             success: function (d) {
                 $('#tb_Send').bootstrapTable('load', d);
+
+                oSend.LoadGroup();
             },
             error: function (err) {
 
@@ -237,11 +265,16 @@ var ButtonInit = function () {
                 });
             });
             var sendUrl = "/SendOrder/SendOrderAdd";
+            var postdata = {
+                groupId: $("#selGroup").val(),
+                data: JSON.stringify(ids)
+            };
+
             $.ajax({
                 type: "post",
                 url: sendUrl,
                 data:{
-                    data: JSON.stringify(ids)
+                    data: postdata
                 },
                 dataType: "json",
                 success: function (d) {
