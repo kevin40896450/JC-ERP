@@ -48,6 +48,8 @@
     <Compile Include="BLL\OrderInfo_Ex.cs" />
     <Compile Include="BLL\ProductType.cs" />
     <Compile Include="BLL\ProductType_Ex.cs" />
+    <Compile Include="BLL\Role.cs" />
+    <Compile Include="BLL\Role_Ex.cs" />
     <Compile Include="BLL\SendOrder.cs" />
     <Compile Include="BLL\SendOrder_Ex.cs" />
     <Compile Include="BLL\UserGroup.cs" />
@@ -55,6 +57,8 @@
     <Compile Include="BLL\v_Order.cs" />
     <Compile Include="BLL\v_OrderDetail.cs" />
     <Compile Include="BLL\v_Order_Ex.cs" />
+    <Compile Include="BLL\v_SendOrder.cs" />
+    <Compile Include="BLL\v_SendOrder_Ex.cs" />
     <Compile Include="BLL\v_UserRole.cs" />
     <Compile Include="DAL\Menu.cs" />
     <Compile Include="DAL\OrderDetail.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="DAL\OrderInfo_Ex.cs" />
     <Compile Include="DAL\ProductType.cs" />
     <Compile Include="DAL\ProductType_Ex.cs" />
+    <Compile Include="DAL\Role.cs" />
     <Compile Include="DAL\SendOrder.cs" />
     <Compile Include="DAL\SendOrder_Ex.cs" />
     <Compile Include="DAL\UserGroup.cs" />
@@ -70,18 +75,21 @@
     <Compile Include="DAL\UserInfo.cs" />
     <Compile Include="DAL\v_Order.cs" />
     <Compile Include="DAL\v_OrderDetail.cs" />
+    <Compile Include="DAL\v_SendOrder.cs" />
     <Compile Include="DAL\v_UserRole.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="Model\Menu.cs" />
     <Compile Include="Model\OrderDetail.cs" />
     <Compile Include="Model\OrderInfo.cs" />
     <Compile Include="Model\ProductType.cs" />
+    <Compile Include="Model\Role.cs" />
     <Compile Include="Model\SendOrder.cs" />
     <Compile Include="Model\TransModel.cs" />
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\v_Order.cs" />
     <Compile Include="Model\v_OrderDetail.cs" />
+    <Compile Include="Model\v_SendOrder.cs" />
     <Compile Include="Model\v_UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

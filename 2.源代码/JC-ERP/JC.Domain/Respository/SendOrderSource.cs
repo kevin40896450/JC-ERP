@@ -19,22 +19,22 @@ namespace JC.Domain.Respository
             int id = BSend.GetMaxId();
             foreach(SendOrderAddDTO dto in list)
             {
-                SendOrder send = CovertSendOrder(dto);
+                SendOrder send = new SendOrder();
                 send.GroupID = groupID;
                 send.SendOrderID = id;
+                send.OrderDetailID = dto.OrderDetailID;
+                send.BuildAddr = "";
+                send.Price = 0;
+                send.RealArea = 0;
+                send.RealPrice = 0;
+                send.Remark = "";
+                send.SendType = 0;
+                send.SendArea = dto.SendNum;
                 send.AddTime = thisTime;
                 models.Add(BSend.CreateAddSql(send));
                 id++;
             }
             DataService.DbHelperSQL.ExecuteSqlTran(models);
-        }
-
-        private SendOrder CovertSendOrder(SendOrderAddDTO model)
-        {
-            SendOrder send = new SendOrder();
-            send.OrderDetailID = model.OrderDetailID;
-            send.SendArea = (decimal)model.SendNum;
-            return send;
         }
     }
 }

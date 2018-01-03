@@ -13,11 +13,13 @@ namespace JC.Domain.DTO
         /// <summary>
         /// 订单详情编号
         /// </summary>
+        [DataMember]
         public int OrderDetailID { get; set; }
 
         /// <summary>
         /// 发货数量
         /// </summary>
-        public int SendNum { get; set; }
+        [DataMember]
+        public decimal SendNum { get; set; }
     }
 }

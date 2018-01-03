@@ -47,7 +47,7 @@ namespace JC_ERP.Modules.SendOrder
                 string group = Request.Form["groupId"].Value;
                 int groupId = 0;
                 ResponseModel model = new ResponseModel();
-                if (String.IsNullOrEmpty(group) || Int32.TryParse(group, out groupId))
+                if (String.IsNullOrEmpty(group) || !Int32.TryParse(group, out groupId))
                 {
                     model.StatusCode = HttpStatusCode.BadGateway;
                     model.Message = "数据异常";
@@ -104,8 +104,8 @@ namespace JC_ERP.Modules.SendOrder
                     sqlWhere += " and Use_UserID =" + uid;
                 }
 
-                OrderPageModel model = new OrderPageModel();
-                DataService.BLL.v_Order BOrder = new DataService.BLL.v_Order();
+                SendOrderPageModel model = new SendOrderPageModel();
+                DataService.BLL.v_SendOrder BOrder = new DataService.BLL.v_SendOrder();
                 model.rows = BOrder.GetModelsByPage(sqlWhere, "OrderID desc", pageSize * (pageNum - 1) + 1, pageSize * pageNum);
                 model.total = BOrder.GetRecordCount(sqlWhere);
                 return Response.AsJson(model);
@@ -124,6 +124,18 @@ namespace JC_ERP.Modules.SendOrder
                 int id = 0;
                 List<v_OrderDetail> list = new List<v_OrderDetail>();
                 if (Int32.TryParse(p.id,out id))
+                {
+                    DataService.BLL.v_OrderDetail BOrder = new DataService.BLL.v_OrderDetail();
+                    list.AddRange(BOrder.GetModelList("OrderID = " + id));
+                }
+                return Response.AsJson(list);
+            };
+
+            Get[RouteDictionary.GetDetail] = p =>
+            {
+                int id = 0;
+                List<v_OrderDetail> list = new List<v_OrderDetail>();
+                if (Int32.TryParse(p.id, out id))
                 {
                     DataService.BLL.v_OrderDetail BOrder = new DataService.BLL.v_OrderDetail();
                     list.AddRange(BOrder.GetModelList("OrderID = " + id));

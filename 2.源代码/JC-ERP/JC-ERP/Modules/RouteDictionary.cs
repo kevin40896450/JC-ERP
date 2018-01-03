@@ -51,6 +51,7 @@ namespace JC_ERP.Modules
         /// 查询合同
         /// </summary>
         public const string List = "/List";
+               
         /// <summary>
         /// 获取产品类型分类
         /// </summary>
@@ -72,10 +73,20 @@ namespace JC_ERP.Modules
         public const string GetSendList = "GetSendList/{id:int}";
 
         public const string SendOrderAdd = "SendOrderAdd";
+
+        public const string GetDetail = "/GetDetail/{id:int}";
         #endregion
 
         #region 
         public const string GroupBase = "/Group";
+        #endregion
+
+        #region
+        public const string BaseDataBase = "/BaseData";
+
+        public const string Roles = "/Roles";
+
+        public const string RolesGet = "/Roles/Get";
         #endregion
     }
 }

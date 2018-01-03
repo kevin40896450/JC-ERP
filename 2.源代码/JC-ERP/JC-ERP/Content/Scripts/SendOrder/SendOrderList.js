@@ -13,11 +13,11 @@
 var InitForm = function () {
     var oInitForm = new Object();
     oInitForm.Init = function () {
-        var srvUrl = "/SimpleUsers";
+        var usersUrl = "/SimpleUsers";
         //加载用户下拉菜单
         $.ajax({
             type: "get",
-            url: srvUrl,
+            url: usersUrl,
             dataType: "json",
             success: function (d) {
                 var arrs = [];
@@ -45,7 +45,7 @@ var InitForm = function () {
     return oInitForm;
 }
 
-var srvUrl = "/Order/Get";
+var srvUrl = "/SendOrder/Get";
 
 //初始化产品类型表格
 var InitTable = function () {
@@ -70,7 +70,7 @@ var InitTable = function () {
             clickToSelect: false,                //是否启用点击选中行
             showToggle: false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
-            detailView: false,                   //是否显示父子表     
+            detailView: true,                   //是否显示父子表     
             idField: "orderID",
             onLoadSuccess: function () {
                 var oSendTable = new SendTable();
@@ -102,15 +102,6 @@ var InitTable = function () {
                 field: 'remarks1',
                 title: '备注'
             }, {
-                field: 'totalNum',
-                title: '合同面积',
-                formatter: function (val, row, idx) {
-                    return parseFloat(val).toFixed("2");
-                }
-            }, {
-                field: 'total',
-                title: '已发货面积'
-            }, {
                 field: 'orderDate',
                 title: '合同时间',
                 formatter: function (val, row, idx) {
@@ -119,10 +110,44 @@ var InitTable = function () {
             }, {
                 title: '操作',
                 formatter: function (val, row, index) {
-                    return '<a  href="javascript:;" class="btn btn-primary truck" val=' + index + '><i class="fa fa-truck"></i>发货</a>';
+                    return '<a  href="javascript:;" class="btn btn-primary truck" val=' + index + '><i class="fa fa-truck"></i>&nbsp;&nbsp;发货</a>';
                 }
-            }]
+            }],
+            onExpandRow: function (index, row, $detail) {
+                var childUrl = "/SendOrder/GetSendList/" + row.orderID;
+                LoadChild($detail, childUrl, row.orderID);
+            }
         });
+
+        function LoadChild($detail, childUrl, id) {
+            var tid = "childTD" + id;
+            var $childTd = $detail.html('<table id="' + tid + '"></table>').find('table');
+            $childTd.bootstrapTable({
+                tableID: tid,//表格容器ID
+                url: childUrl,//请求后台的URL（*）
+                method: 'get',
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                uniqueId: "name",                     //每一行的唯一标识，一般为主键列
+                idField: "orderID",                
+                columns: [{
+                    field: "typeName",
+                    title: "业务类型"
+                }, {
+                    field: "proName",
+                    title: "产品类型"
+                }, {
+                    field: "planNum",
+                    title: "合同面积"
+                }, {
+                    field: "sendArea",
+                    title: "已发货面积"
+                }]
+            });
+        }
     }
     return oInitTable;
 }
@@ -177,11 +202,11 @@ var SendTable = function () {
     };
 
     oSend.LoadGroup = function () {
-        var srvUrl = "/Group/All";
+        var groupUrl = "/Group/All";
         //加载用户下拉菜单
         $.ajax({
             type: "get",
-            url: srvUrl,
+            url: groupUrl,
             dataType: "json",
             success: function (d) {
                 var arrs = [];
@@ -273,12 +298,20 @@ var ButtonInit = function () {
             $.ajax({
                 type: "post",
                 url: sendUrl,
-                data:{
-                    data: postdata
-                },
+                data: postdata,
                 dataType: "json",
                 success: function (d) {
-                    
+                    if (d.statusCode == 200) {
+                        $('#myModal').modal('hide');
+                        $("#myAlertLabel").html("添加成功!");
+                        $('#myAlert').modal();
+
+                        $("#tb_order").bootstrapTable('refresh', { 'url': srvUrl });
+                    }
+                    else {
+                        $("#myAlertLabel").html("添加失败！" + d.message);
+                        $('#myAlert').modal();
+                    }
                 },
                 error: function (err) {
 
