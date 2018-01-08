@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DataService.Model;
 using JC_ERP.Model;
 using Nancy;
 using Nancy.Security;
@@ -43,6 +44,49 @@ namespace JC_ERP.Modules.BaseData
                 DataService.BLL.Role BRole = new DataService.BLL.Role();
                 model.rows = BRole.GetModelsByPage(sqlWhere, "RoleID desc", pageSize * (pageNum - 1) + 1, pageSize * pageNum);
                 model.total = BRole.GetRecordCount(sqlWhere);
+                return Response.AsJson(model);
+            };
+
+            Post[RouteDictionary.RolesEdit] = p =>
+            {
+                ResponseModel model = new ResponseModel();
+                string roleId = Request.Form["rid"];
+                string name = Request.Form["name"];
+                string ids = Request.Form["ids"];
+                
+                int id = 0;
+                if (!String.IsNullOrEmpty(roleId) && Int32.TryParse(roleId, out id) && id > 0 && !String.IsNullOrEmpty(name))
+                {
+                    DataService.BLL.Role BRole = new DataService.BLL.Role();
+                    Role role = BRole.GetModel(id);
+                    if (role != null)
+                    {
+                        role.RoleName = name;
+                        role.MenuList = ids;
+                        try
+                        {
+                            bool bResult = BRole.Update(role);
+                            if (!bResult)
+                            {
+                                model.Message = "数据库访问错误，请联系管理员";
+                            }
+                            else
+                            {
+                                model.StatusCode = HttpStatusCode.OK;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            model.StatusCode = HttpStatusCode.BadGateway;
+                            model.Message = ex.Message;
+                        }
+                    }
+                }
+                else
+                {
+                    model.StatusCode = HttpStatusCode.BadGateway;
+                    model.Message = "请输入完整的信息";
+                }
                 return Response.AsJson(model);
             };
         }

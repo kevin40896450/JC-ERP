@@ -457,6 +457,17 @@
     <Content Include="Content\plugins\jQuery\jquery-2.2.3.min.js" />
     <Content Include="Content\plugins\jsTree\jsTree.css" />
     <Content Include="Content\plugins\jsTree\jsTree.min.js" />
+    <Content Include="Content\plugins\jsTree\themes\default-dark\32px.png" />
+    <Content Include="Content\plugins\jsTree\themes\default-dark\40px.png" />
+    <Content Include="Content\plugins\jsTree\themes\default-dark\style.css" />
+    <Content Include="Content\plugins\jsTree\themes\default-dark\style.min.css" />
+    <Content Include="Content\plugins\jsTree\themes\default-dark\throbber.gif" />
+    <Content Include="Content\plugins\jsTree\themes\default\32px.png" />
+    <Content Include="Content\plugins\jsTree\themes\default\32px_line.png" />
+    <Content Include="Content\plugins\jsTree\themes\default\32px_original.png" />
+    <Content Include="Content\plugins\jsTree\themes\default\40px.png" />
+    <Content Include="Content\plugins\jsTree\themes\default\style.css" />
+    <Content Include="Content\plugins\jsTree\themes\default\throbber.gif" />
     <Content Include="Content\plugins\select2\i18n\ar.js" />
     <Content Include="Content\plugins\select2\i18n\az.js" />
     <Content Include="Content\plugins\select2\i18n\bg.js" />

@@ -8,8 +8,10 @@
 @section style{
     <!-- jsTree -->
     <link href="/Content/plugins/jsTree/jsTree.css" rel="stylesheet" />
+    <link href="/Content/plugins/jsTree/themes/default/style.css" rel="stylesheet" />
     <!-- DataTables -->
     <link href="/Content/plugins/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Content/plugins/Validator/bootstrapValidator.min.css">
 }
 @section scripts{
     <!-- jsTree -->
@@ -17,6 +19,7 @@
     <!-- DataTables -->
     <script src="/Content/plugins/bootstrap-table/bootstrap-table.js"></script>
     <script src="/Content/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/Content/plugins/Validator/bootstrapValidator.js"></script>
     <!-- page script -->
     <script src="~/Content/Scripts/BaseData/Roles.js"></script>
 }
@@ -63,33 +66,28 @@
 
 <div class="modal" id="myModal" role="dialog" aria-labelledby="gridSystemModalLabel">
     <div class="modal-dialog" role="document">
-        <form class="form-horizontal" id="myModalForm" action="/group/edit">
+        <form class="form-horizontal" id="myModalForm" name="myModalForm" action="/BaseData/Roles/Edit">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="groupEdit">编辑分组</h4>
+                    <h4 class="modal-title" id="groupEdit">编辑角色</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="inputName" class="col-sm-3 control-label">分组名称：</label>
+                            <label for="inputName" class="col-sm-3 control-label">角色名称：</label>
 
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="groupName" name="groupName">
+                                <input type="text" class="form-control" id="rolename" name="rolename" placeholder="角色名称">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputName" class="col-sm-3 control-label">组长：</label>
+                            <label for="inputName" class="col-sm-3 control-label">权限列表：</label>
 
                             <div class="col-sm-9">
-                                <select class="form-control select2" id="selUser" name="selUser" style="width:100%;"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputName" class="col-sm-3 control-label">组员：</label>
+                                <div id="roleTree" class="tree-demo">
 
-                            <div class="col-sm-9">
-                                <select class="form-control select2" id="selMember" name="selMember" style="width:100%;" multiple></select>
+                                </div>
                             </div>
                         </div>
                     </div>
