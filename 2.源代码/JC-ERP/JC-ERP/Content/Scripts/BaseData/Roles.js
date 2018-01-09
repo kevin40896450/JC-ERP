@@ -2,6 +2,9 @@
    var oTable = new InitTable();
    oTable.Init();
 
+   var oBtn = new Btn();
+   oBtn.Init();
+
    $('#myModalForm').bootstrapValidator({
        message: 'This value is not valid',
        feedbackIcons: {
@@ -56,7 +59,7 @@ var InitTable = function () {
                     if (role == null) {
                         return;
                     }
-                    var oModalInit = new ModalInit(role);
+                    var oModalInit = new ModalInit("编辑角色", role);
                     oModalInit.init();
                     $('#myModal').modal({ backdrop: 'static' });
                 });
@@ -80,12 +83,64 @@ var InitTable = function () {
     return oInitTable;
 }
 
-var ModalInit = function (model) {
+var Btn = function () {
+    var oBtn = new Object();
+
+    oBtn.Init = function () {
+        $("#btn_add").click(function () {
+            var oModalInit = new ModalInit("添加角色");
+            oModalInit.init();
+            $('#myModal').modal({ backdrop: 'static' });
+        });
+
+        $("#btn_del").click(function () {
+            var arrselections = $("#tb_role").bootstrapTable('getSelections');
+            var ids = [];
+            if (arrselections.length <= 0) {
+                alert("请至少选择一项");
+                return;
+            }
+            if (!confirm("是否确认删除所选角色？"))
+                return;
+
+            var u = "/BaseData/Roles/Del";
+            $.each(arrselections, function (idx, arr) {
+                ids.push(arr.roleID);
+            });
+            var postdata = {
+                data: ids.join(",")
+            };
+            $.post(u, postdata
+               ).done(function (doc) {
+                   if (doc.statusCode == 200) {
+                       $("#myAlertLabel").html("删除成功！");
+                       $('#myAlert').modal();
+                       $('#myModal').modal('hide');
+                       $("#tb_role").bootstrapTable('refresh', { 'url': srvUrl });
+                   }
+                   else {
+                       $("#myAlertLabel").html("删除失败！" + doc.message);
+                       $('#myAlert').modal();
+                   }
+               }).fail(function (ex) {
+               }).always(function () {
+
+               });
+        });
+    };
+    return oBtn;
+};
+
+var ModalInit = function (title, model) {
     var oModal = new Object();
     oModal.model = model;
+    oModal.title = title;
     oModal.treeObj = null;
     oModal.init = function () {
-        $("#rolename").val(this.model.roleName);
+        if (this.model) {
+            $("#rolename").val(this.model.roleName);
+            $("#groupEdit").html(oModal.title);
+        }
         $.jstree.destroy();
         $.ajax({
             type: "get",
@@ -94,9 +149,11 @@ var ModalInit = function (model) {
             success: function (d) {
                 var roles = [];
                 $.each(d, function (idx, item) {
-                    var IsChecked = false;                       
-                    if (("," + oModal.model.menuList + ",").indexOf(("," + item.id + ",")) >= 0) {
-                        IsChecked = true;
+                    var IsChecked = false;
+                    if (oModal.model) {
+                        if (("," + oModal.model.menuList + ",").indexOf(("," + item.id + ",")) >= 0) {
+                            IsChecked = true;
+                        }
                     }
                     if (item.children.length == 0) {
                         roles.push({
@@ -133,11 +190,13 @@ var ModalInit = function (model) {
                         });
 
                 function CreateChildNode(childs) {
-                    var child = [];                    
+                    var child = [];
                     $.each(childs, function (idx, item) {
                         var IsChecked = false;
-                        if (("," + oModal.model.menuList + ",").indexOf("," + item.id + ",") >= 0) {
-                            IsChecked = true;
+                        if (oModal.model) {
+                            if (("," + oModal.model.menuList + ",").indexOf("," + item.id + ",") >= 0) {
+                                IsChecked = true;
+                            }
                         }
                         if (item.children.length == 0) {
                             child.push({
@@ -165,7 +224,7 @@ var ModalInit = function (model) {
         }).always(function () {
 
         });
-        
+
         $("#myModal").find(".btn-primary").unbind("click").bind("click", function () {
             var $form = $('#myModalForm');
             var data = $form.data('bootstrapValidator');
@@ -173,15 +232,19 @@ var ModalInit = function (model) {
                 // 修复记忆的组件不验证
                 data.validate();
 
-                if (data.isValid()) {                    
+                if (data.isValid()) {
                     var nodes = $("#roleTree").jstree("get_checked");
                     var input = [];
                     $.each(nodes, function (idx, node) {
                         var nodeObj = $("#roleTree").jstree('get_node', node);
                         input.push(nodeObj.id);
                     });
+                    var roleID = -1;
+                    if (oModal.model) {
+                        roleID = oModal.model.roleID;
+                    }
                     var postdata = {
-                        rid: oModal.model.roleID,
+                        rid: roleID,
                         name: $("#rolename").val(),
                         ids: input.join(",")
                     };
@@ -190,18 +253,28 @@ var ModalInit = function (model) {
                     ).done(function (doc) {
                         if (doc.statusCode == 200) {
                             $('#myModal').modal('hide');
-                            $("#myAlertLabel").html("修改成功!");
+                            if (roleID > 0) {
+                                $("#myAlertLabel").html("修改成功!");
+                            }
+                            else {
+                                $("#myAlertLabel").html("添加成功!");
+                            }                            
                             $('#myAlert').modal();
                             $("#tb_role").bootstrapTable('refresh', { 'url': srvUrl });
                         }
                         else {
-                            $("#myAlertLabel").html("修改失败！" + doc.message);
+                            if (roleID > 0) {
+                                $("#myAlertLabel").html("修改失败！" + doc.message);
+                            }
+                            else {
+                                $("#myAlertLabel").html("添加失败！" + doc.message);
+                            }
                             $('#myAlert').modal();
                         }
                     }).fail(function (ex) {
                     }).always(function () {
 
-                    });                 
+                    });
                 }
             }
         });

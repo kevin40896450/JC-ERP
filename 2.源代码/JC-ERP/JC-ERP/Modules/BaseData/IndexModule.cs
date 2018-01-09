@@ -55,17 +55,58 @@ namespace JC_ERP.Modules.BaseData
                 string ids = Request.Form["ids"];
                 
                 int id = 0;
-                if (!String.IsNullOrEmpty(roleId) && Int32.TryParse(roleId, out id) && id > 0 && !String.IsNullOrEmpty(name))
+                if (!String.IsNullOrEmpty(roleId) && Int32.TryParse(roleId, out id) && !String.IsNullOrEmpty(name))
                 {
                     DataService.BLL.Role BRole = new DataService.BLL.Role();
                     Role role = BRole.GetModel(id);
-                    if (role != null)
+                    if (role == null)
                     {
-                        role.RoleName = name;
-                        role.MenuList = ids;
+                        role = new Role();
+                        role.RoleID = BRole.GetMaxId();
+                    }
+                    role.RoleName = name;
+                    role.MenuList = ids;
+                    try
+                    {
+                        bool bResult = id > 0 ? BRole.Update(role) : BRole.Add(role);
+                        if (!bResult)
+                        {
+                            model.Message = "数据库访问错误，请联系管理员";
+                        }
+                        else
+                        {
+                            model.StatusCode = HttpStatusCode.OK;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        model.StatusCode = HttpStatusCode.BadGateway;
+                        model.Message = ex.Message;
+                    }
+                }
+                else
+                {
+                    model.StatusCode = HttpStatusCode.BadGateway;
+                    model.Message = "请输入完整的信息";
+                }
+                return Response.AsJson(model);
+            };
+
+            Post[RouteDictionary.RolesDel] = p =>
+            {
+                ResponseModel model = new ResponseModel();
+                string ids = Request.Form["data"];
+
+                int id = 0;
+                if (!String.IsNullOrEmpty(ids))
+                {                    
+                    bool bResult = Common.SiteFun.CheckIds(ids);
+                    if(bResult)
+                    {
+                        DataService.BLL.Role BRole = new DataService.BLL.Role();
                         try
                         {
-                            bool bResult = BRole.Update(role);
+                            bResult = BRole.DeleteList(ids); ;
                             if (!bResult)
                             {
                                 model.Message = "数据库访问错误，请联系管理员";
@@ -80,7 +121,7 @@ namespace JC_ERP.Modules.BaseData
                             model.StatusCode = HttpStatusCode.BadGateway;
                             model.Message = ex.Message;
                         }
-                    }
+                    }                    
                 }
                 else
                 {

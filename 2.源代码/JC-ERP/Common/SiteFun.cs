@@ -49,5 +49,30 @@ namespace Common
             }
             return parStr;
         }
+
+        /// <summary>
+        /// 验证删除的id集合是否符合规范
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public static bool CheckIds(string ids)
+        {
+            bool bResult = true;
+            int id = 0;
+            string[] idsStr = ids.Split(',');
+            foreach(string s in idsStr)
+            {
+                if (Int32.TryParse(s, out id) && id > 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    bResult = false;
+                    break;
+                }
+            }
+            return bResult;
+        }
     }
 }
