@@ -113,6 +113,10 @@ namespace DataService.Model
             set { _addtime = value; }
             get { return _addtime; }
         }
+        public string AddTimeStr
+        {
+            get { return AddTime.ToString("yyyy-MM-dd hh:mm:ss"); }
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -13,6 +13,7 @@
               if (completeFun) completeFun();
           });
     },
+    UserStatus:["1","2"],//1 正常  2 离职
     getQueryString: function (name)//根据参数获取url参数值
     {
         var reg = new RegExp("(^|&)" + name.toLocaleLowerCase() + "=([^&]*)(&|$)", "i");

@@ -60,8 +60,7 @@ $(document).ready(function () {
             if (data.isValid()) {
                 var action = $form.attr("action");
                 var postdata = $form.serializeArray();
-                if ($("#Province").val()=="")
-                {
+                if ($("#Province").val() == "") {
                     $("#myAlertLabel").html("请选择省份!");
                     $('#myAlert').modal();
                     $("#btnAdd").removeAttr("disabled");

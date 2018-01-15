@@ -49,6 +49,8 @@ namespace JC_ERP.Modules
 
         #region 基础数据管理
         public const string BaseDataRolesList = "/BaseData/Roles";
+
+        public const string BaseDataUserList = "/BaseData/UserList";
         #endregion
     }
 }

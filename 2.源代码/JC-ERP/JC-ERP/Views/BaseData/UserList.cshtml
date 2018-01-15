@@ -1,0 +1,151 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Security.NavInfo>
+
+@{
+    ViewBag.Title = "用户查询";
+    Layout = "Shared/_Layout.cshtml";
+}
+
+@section style{ 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/Content/plugins/select2/select2.min.css">
+    <!-- DataTables -->
+    <link href="/Content/plugins/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/plugins/Validator/bootstrapValidator.min.css">
+}
+@section scripts{
+    <!-- Select2 -->
+<script src="/Content/plugins/select2/select2.full.min.js"></script>
+   <!-- Inputmask -->
+<script src="/Content/plugins/Inputmask/inputmask.js"></script>
+<script src="/Content/plugins/Inputmask/inputmask.numeric.extensions.js"></script>
+<script src="/Content/plugins/Inputmask/jquery.inputmask.js"></script>  
+    <!-- DataTables -->
+    <script src="/Content/plugins/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/Content/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="/Content/plugins/Validator/bootstrapValidator.js"></script>
+     <!-- cxselect -->
+<script src="/Content/plugins/cxselect/jquery.cxselect.js"></script>
+    <!-- page script -->
+    <script src="~/Content/Scripts/BaseData/UserList.js"></script>
+}
+
+<section class="content-header">
+    <h1>
+        @Model.Title
+    </h1>
+    <ol class="breadcrumb">
+        @Html.Raw(Model.Nav)
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- interactive chart -->
+            <div class="box box-line">
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="box box-line">
+                                <div class="box-body">
+                                    <div id="toolbar" class="btn-group">
+                                        <button id="btn_add" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;添加
+                                        </button>
+                                        <button id="btn_del" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;删除
+                                        </button>
+                                    </div>
+                                    <table id="tb_user"></table>
+                                </div>
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+<div class="modal" id="myModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <form class="form-horizontal" id="myModalForm" name="myModalForm" action="/BaseData/UserList/Edit">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modelTitle">添加用户</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">用户名：</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="userName" name="userName" placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">所属角色：</label>
+
+                            <div class="col-sm-9">
+                                <select class="form-control select2" id="selRole" style="width:100%;"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">真实姓名：</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="realName" name="realName" placeholder="真实姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">性别：</label>
+
+                            <div class="col-sm-9">
+                                <input type="radio" name="sex" id="sexMale" value="男">
+                                男
+                                <input type="radio" name="sex" id="sexFeMale" value="女">
+                                女
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">联系电话：</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="tel" name="tel" placeholder="联系电话">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal" id="myAlert" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="myAlertLabel">成功</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+</div>

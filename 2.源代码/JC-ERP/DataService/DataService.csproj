@@ -77,6 +77,7 @@
     <Compile Include="DAL\v_OrderDetail.cs" />
     <Compile Include="DAL\v_SendOrder.cs" />
     <Compile Include="DAL\v_UserRole.cs" />
+    <Compile Include="BLL\v_UserRole_Ex.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="Model\Menu.cs" />
     <Compile Include="Model\OrderDetail.cs" />

@@ -81,12 +81,22 @@ namespace JC_ERP.Modules
         public const string GroupBase = "/Group";
         #endregion
 
-        #region
+        #region 基础数据管理
         public const string BaseDataBase = "/BaseData";
 
         public const string Roles = "/Roles";
 
+        public const string UserList = "/UserList";
+
         public const string RolesGet = "/Roles/Get";
+
+        public const string RolesSimpleGet = "/Roles/SimpleGet";
+
+        public const string UserListGet = "/UserList/Get";
+
+        public const string UserEdit = "/UserList/Edit";
+
+        public const string UserDel = "/UserList/Del";
 
         public const string RolesEdit = "/Roles/Edit";
 

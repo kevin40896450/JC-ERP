@@ -176,4 +176,3 @@ var ButtonInit = function () {
 
     return oInit;
 };
-

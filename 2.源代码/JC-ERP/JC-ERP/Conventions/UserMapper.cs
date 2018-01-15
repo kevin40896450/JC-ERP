@@ -10,6 +10,7 @@ namespace JC_ERP
 {
     public class UserMapper : IUserMapper
     {
+        public static string DefaultPwd = System.Configuration.ConfigurationManager.AppSettings["defaultPwd"];
         public static List<UserLimitInfo> users;
         static UserMapper()
         {

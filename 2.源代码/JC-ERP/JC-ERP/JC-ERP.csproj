@@ -526,6 +526,7 @@
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.css" />
     <Content Include="Content\plugins\Validator\bootstrapValidator.min.js" />
     <Content Include="Content\Scripts\BaseData\Roles.js" />
+    <Content Include="Content\Scripts\BaseData\UserList.js" />
     <Content Include="Content\Scripts\Common.js" />
     <Content Include="Content\Scripts\Group\AddGroup.js" />
     <Content Include="Content\Scripts\Group\GroupList.js" />
@@ -560,6 +561,7 @@
     <Content Include="Views\Group\List.cshtml" />
     <Content Include="Views\Group\Add.cshtml" />
     <Content Include="Views\BaseData\Roles.cshtml" />
+    <Content Include="Views\BaseData\UserList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -581,6 +583,7 @@
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Model\RolesPageModel.cs" />
     <Compile Include="Model\SendOrderPageModel.cs" />
+    <Compile Include="Model\UsersPageModel.cs" />
     <Compile Include="Modules\BaseData\IndexModule.cs" />
     <Compile Include="Modules\CommonModule.cs" />
     <Compile Include="Modules\Group\IndexModule.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Common
 {
     public class SiteFun
-    {
+    {       
         /// <summary>
         /// 过滤非法字符串
         /// </summary>
