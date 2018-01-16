@@ -20,6 +20,7 @@ namespace DataService.Model
         private string _idcard;
         private string _tel;
         private string _status;
+        private DateTime? _intotime;
         private DateTime _addtime = DateTime.Now;
         /// <summary>
         /// 用户编号
@@ -100,6 +101,14 @@ namespace DataService.Model
         {
             set { _status = value; }
             get { return _status; }
+        }
+        /// <summary>
+        /// 入职时间
+        /// </summary>
+        public DateTime? IntoTime
+        {
+            set { _intotime = value; }
+            get { return _intotime; }
         }
         /// <summary>
         /// 添加时间

@@ -35,6 +35,11 @@
                 validators: {
                     notEmpty: {
                         message: '联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '请输入11位手机号码'
                     }
                 }
             }
@@ -101,7 +106,7 @@ var InitTable = function () {
                 field: 'roleName',
                 title: '用户角色'
             }, {
-                field: 'addTimeStr',
+                field: 'intoTimeStr',
                 title: '入职时间'
             }, {
                 title: '操作',
@@ -140,6 +145,12 @@ var Btn = function () {
 
         });
         
+        $('.mydate').datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            language: "zh-CN"
+        });
+
         $("#btn_add").click(function () {
             var oModalInit = new ModalInit("添加用户");
             oModalInit.init();
@@ -203,6 +214,7 @@ var ModalInit = function (title, model) {
             else {
                 $("#sexMale").attr('checked', 'true');                
             }
+            $("#intodate").val(this.model.intodate);
         }
         else {
             $("#userName").removeAttr("disabled");
@@ -219,7 +231,8 @@ var ModalInit = function (title, model) {
                 // 修复记忆的组件不验证
                 data.validate();
 
-                if (data.isValid()) {                   
+                if (data.isValid()) {
+                    //var postdata2 = $form.serializeArray();
                     var userID = -1;
                     if (oModal.model) {
                         userID = oModal.model.userID;
@@ -230,8 +243,10 @@ var ModalInit = function (title, model) {
                         roleId: $("#selRole").val(),
                         realName: $("#realName").val(),
                         sex: $("input[name='sex']:checked").val(),
-                        tel: $("#tel").val()
+                        tel: $("#tel").val(),
+                        intoDate: $("#intodate").val()
                     };
+                    
                     var action = $("#myModalForm").attr("action");
                     $.post(action, postdata
                     ).done(function (doc) {

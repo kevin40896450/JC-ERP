@@ -95,7 +95,7 @@ namespace JC_ERP.Modules.BaseData
                 string realName = Request.Form["realName"];
                 string sex = Request.Form["sex"];
                 string tel = Request.Form["tel"];
-
+                string into = Request.Form["intoDate"];
                 int id = 0;
                 int rid = 0;
                 if (!String.IsNullOrEmpty(uid) && Int32.TryParse(uid, out id) && !String.IsNullOrEmpty(userName)&&!String.IsNullOrEmpty(roleId)&& Int32.TryParse(roleId, out rid))
@@ -107,6 +107,7 @@ namespace JC_ERP.Modules.BaseData
                         user = new UserInfo();
                         user.UserID = BUser.GetMaxId();
                         user.UserName = userName;
+                        user.AddTime = DateTime.Now;
                     }
                     user.RoleID = rid;
                     user.UserGuid = Guid.NewGuid().ToString();
@@ -116,7 +117,10 @@ namespace JC_ERP.Modules.BaseData
                     user.Status = "";
                     user.Sex = sex;
                     user.Tel = tel;
-                    user.AddTime = DateTime.Now;
+                    if (!String.IsNullOrEmpty(into))
+                    {
+                        user.IntoTime = DateTime.Parse(into);
+                    }
                     try
                     {
                         bool bResult = id > 0 ? BUser.Update(user) : BUser.Add(user);

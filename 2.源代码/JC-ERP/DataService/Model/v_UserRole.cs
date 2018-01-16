@@ -20,6 +20,7 @@ namespace DataService.Model
         private string _idcard;
         private string _tel;
         private string _status;
+        private DateTime? _intotime;
         private DateTime _addtime;
         private string _rolename;
         private string _menulist;
@@ -108,14 +109,18 @@ namespace DataService.Model
         /// <summary>
         /// 
         /// </summary>
+        public DateTime? IntoTime
+        {
+            set { _intotime = value; }
+            get { return _intotime; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime AddTime
         {
             set { _addtime = value; }
             get { return _addtime; }
-        }
-        public string AddTimeStr
-        {
-            get { return AddTime.ToString("yyyy-MM-dd hh:mm:ss"); }
         }
         /// <summary>
         /// 
@@ -150,6 +155,11 @@ namespace DataService.Model
             get { return _isallowdel; }
         }
         #endregion Model
+
+        public string IntoTimeStr
+        {
+            get { return IntoTime != null ? IntoTime.Value.ToString("yyyy-MM-dd") : null; }
+        }
 
     }
 }

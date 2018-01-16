@@ -36,7 +36,7 @@ namespace DataService.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel from v_UserRole ");
+            strSql.Append("select  top 1 UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,IntoTime,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel from v_UserRole ");
             strSql.Append(" where UserID=@UserID ");
             SqlParameter[] parameters = {
                     new SqlParameter("@UserID", SqlDbType.Int,4)            };
@@ -103,6 +103,10 @@ namespace DataService.DAL
                 {
                     model.Status = row["Status"].ToString();
                 }
+                if (row["IntoTime"] != null && row["IntoTime"].ToString() != "")
+                {
+                    model.IntoTime = DateTime.Parse(row["IntoTime"].ToString());
+                }
                 if (row["AddTime"] != null && row["AddTime"].ToString() != "")
                 {
                     model.AddTime = DateTime.Parse(row["AddTime"].ToString());
@@ -147,7 +151,7 @@ namespace DataService.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel ");
+            strSql.Append("select UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,IntoTime,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel ");
             strSql.Append(" FROM v_UserRole ");
             if (strWhere.Trim() != "")
             {
@@ -167,7 +171,7 @@ namespace DataService.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel ");
+            strSql.Append(" UserID,RoleID,UserGuid,UserName,Pwd,RealName,Sex,IDCard,Tel,Status,IntoTime,AddTime,RoleName,MenuList,IsAllowCheck,IsAllowDel ");
             strSql.Append(" FROM v_UserRole ");
             if (strWhere.Trim() != "")
             {
