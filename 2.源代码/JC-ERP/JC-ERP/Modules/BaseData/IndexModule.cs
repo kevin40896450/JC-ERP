@@ -104,6 +104,13 @@ namespace JC_ERP.Modules.BaseData
                     UserInfo user = BUser.GetModel(id);
                     if (user == null)
                     {
+                        UserInfo checkUser = BUser.GetModel(userName);
+                        if(checkUser!=null)
+                        {
+                            model.StatusCode = HttpStatusCode.BadGateway;
+                            model.Message = "该用户名已存在，请重新输入";
+                            return Response.AsJson(model);
+                        }
                         user = new UserInfo();
                         user.UserID = BUser.GetMaxId();
                         user.UserName = userName;
@@ -261,6 +268,54 @@ namespace JC_ERP.Modules.BaseData
                             model.Message = ex.Message;
                         }
                     }                    
+                }
+                else
+                {
+                    model.StatusCode = HttpStatusCode.BadGateway;
+                    model.Message = "请输入完整的信息";
+                }
+                return Response.AsJson(model);
+            };
+
+            Post[RouteDictionary.PwdEdit] = p =>
+            {
+                ResponseModel model = new ResponseModel();
+                string old = Request.Form["oldPwd"];
+                string newPwd = Request.Form["newPwd"];
+                UserIdentity user = (UserIdentity)Context.CurrentUser;
+                if (user!=null&&!String.IsNullOrEmpty(old) && !String.IsNullOrEmpty(newPwd))
+                {
+                    try
+                    {
+                        DataService.BLL.UserInfo BUser = new DataService.BLL.UserInfo();
+                        UserInfo checkUser = BUser.GetModel(user.UserID);
+                        if (checkUser != null)
+                        {
+                            if (checkUser.Pwd != old)
+                            {
+                                model.Message = "原始密码错误，请重新输入";
+                                model.StatusCode = HttpStatusCode.BadGateway;
+                            }
+                            else
+                            {
+                                checkUser.Pwd = newPwd;
+                                bool bResult = BUser.Update(checkUser);
+                                if (!bResult)
+                                {
+                                    model.Message = "数据库访问错误，请联系管理员";
+                                }
+                                else
+                                {
+                                    model.StatusCode = HttpStatusCode.OK;
+                                }
+                            }
+                        }                        
+                    }
+                    catch (Exception ex)
+                    {
+                        model.StatusCode = HttpStatusCode.BadGateway;
+                        model.Message = ex.Message;
+                    }
                 }
                 else
                 {

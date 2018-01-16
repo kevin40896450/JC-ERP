@@ -115,11 +115,6 @@ var InitTable = function () {
                 formatter: function (val, row, idx) {
                     return Common.formatDataTime(val, "yyyy-MM-dd");
                 }
-            }, {
-                title: '操作',
-                formatter: function (val, row, index) {
-                    return '<a  href="javascript:;" class="btn btn-primary truck" val=' + index + '><i class="fa fa-truck"></i>发货</a>';
-                }
             }]
         });
     }

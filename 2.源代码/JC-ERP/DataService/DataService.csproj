@@ -54,6 +54,7 @@
     <Compile Include="BLL\SendOrder_Ex.cs" />
     <Compile Include="BLL\UserGroup.cs" />
     <Compile Include="BLL\UserInfo.cs" />
+    <Compile Include="BLL\UserInfo_Ex.cs" />
     <Compile Include="BLL\v_Order.cs" />
     <Compile Include="BLL\v_OrderDetail.cs" />
     <Compile Include="BLL\v_Order_Ex.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DAL\UserGroup.cs" />
     <Compile Include="BLL\UserGroup_Ex.cs" />
     <Compile Include="DAL\UserInfo.cs" />
+    <Compile Include="DAL\UserInfo_Ex.cs" />
     <Compile Include="DAL\v_Order.cs" />
     <Compile Include="DAL\v_OrderDetail.cs" />
     <Compile Include="DAL\v_SendOrder.cs" />

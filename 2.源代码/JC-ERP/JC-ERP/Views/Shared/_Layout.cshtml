@@ -21,6 +21,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="~/Content/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/Content/plugins/Validator/bootstrapValidator.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,9 +37,15 @@
     <script src="/Content/dist/js/app.min.js"></script>
     <!-- cxselect -->
     <script src="/Content/plugins/cxselect/jquery.cxselect.js"></script>
+    <!-- Inputmask -->
+    <script src="/Content/plugins/Inputmask/inputmask.js"></script>
+    <script src="/Content/plugins/Inputmask/inputmask.numeric.extensions.js"></script>
+    <script src="/Content/plugins/Inputmask/jquery.inputmask.js"></script>
+    <script src="/Content/plugins/Validator/bootstrapValidator.js"></script>
     <!-- FastClick -->
     <script src="/Content/plugins/fastclick/fastclick.js"></script>
     <script src="/Content/dist/js/menu.js"></script>
+    <script src="/Content/dist/js/index.js"></script>
     <script src="/Content/Scripts/Common.js"></script>
     @RenderSection("style", required: false)
     @RenderSection("scripts", required: false)
@@ -265,7 +272,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">    
                                     <div class="pull-left">
-                                        <a href="/Account/EditPwd" class="btn btn-default btn-flat">修改密码</a>
+                                        <a href="#" id="changePwd" class="btn btn-default btn-flat">修改密码</a>
                                     </div>                                
                                     <div class="pull-right">
                                         <a href="/logout" class="btn btn-default btn-flat">退出</a>
@@ -297,6 +304,66 @@
             <!-- Content Header (Page header) -->
             @RenderBody()
             <!-- /.content -->
+        </div>
+        <div class="modal" id="myPwdModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+            <div class="modal-dialog" role="document">
+                <form class="form-horizontal" id="myPwdModalForm" name="myPwdModalForm" action="/BaseData/Pwd/Edit">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modelTitle">修改密码</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">原始密码：</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="oldPwd" name="oldPwd" placeholder="原始密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">新密码：</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="newPwd" name="newPwd" placeholder="新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label">确认新密码：</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="confirmPwd" name="confirmPwd" placeholder="确认新密码">
+                                    </div>
+                                </div>
+                             </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary">确定</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </form>
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal" id="myPwdAlert" role="dialog" aria-labelledby="gridSystemModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="myPwdMsg">密码修改成功</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">

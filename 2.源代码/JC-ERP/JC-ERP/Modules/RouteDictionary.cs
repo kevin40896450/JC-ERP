@@ -103,6 +103,8 @@ namespace JC_ERP.Modules
         public const string RolesDel = "/Roles/Del";
 
         public const string RolesMenus = "/Menus";
+
+        public const string PwdEdit = "/Pwd/Edit";
         #endregion
     }
 }
