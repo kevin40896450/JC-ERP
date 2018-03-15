@@ -54,6 +54,7 @@
     <Compile Include="Respository\OrderSource.cs" />
     <Compile Include="Respository\ProductTypeSource.cs" />
     <Compile Include="Respository\SendOrderSource.cs" />
+    <Compile Include="Respository\StatSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataService\DataService.csproj">
