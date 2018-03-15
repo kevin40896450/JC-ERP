@@ -562,6 +562,7 @@
     <Content Include="Views\Group\Add.cshtml" />
     <Content Include="Views\BaseData\Roles.cshtml" />
     <Content Include="Views\BaseData\UserList.cshtml" />
+    <Content Include="Views\Stat\OrderList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -592,6 +593,7 @@
     <Compile Include="Modules\Order\IndexModule.cs" />
     <Compile Include="Modules\RouteDictionary.cs" />
     <Compile Include="Modules\SendOrder\IndexModule.cs" />
+    <Compile Include="Modules\Stat\IndexModule.cs" />
     <Compile Include="Modules\ViewDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

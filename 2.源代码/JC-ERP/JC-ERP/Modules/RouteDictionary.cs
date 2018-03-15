@@ -13,59 +13,59 @@ namespace JC_ERP.Modules
         /// <summary>
         /// 首页
         /// </summary>
-        public const string Index = "/index";
+        public const string Index = "index";
         /// <summary>
         /// 菜单列表
         /// </summary>
-        public const string MenuList = "/MenuList";
+        public const string MenuList = "MenuList";
 
         #region Common
         /// <summary>
         /// 用户列表路由(获取简单的用户信息)
         /// </summary>
-        public const string SimpleUsers = "/SimpleUsers";
+        public const string SimpleUsers = "SimpleUsers";
         #endregion
 
         #region 登陆相关
-        public const string Login = "/login";
+        public const string Login = "login";
 
-        public const string Logout = "/logout";
+        public const string Logout = "logout";
 
         #endregion
 
-        public const string Add = "/add";
+        public const string Add = "add";
 
-        public const string Edit = "/edit";
+        public const string Edit = "edit";
 
-        public const string Del = "/Del";
+        public const string Del = "Del";
 
-        public const string All = "/All";
+        public const string All = "All";
 
         #region 订单页面路由
-        public const string OrderBase = "/order";
+        public const string OrderBase = "order";
         /// <summary>
         /// 订单首页
         /// </summary>
-        public const string OrderIndex = "/index";
+        public const string OrderIndex = "index";
         /// <summary>
         /// 查询合同
         /// </summary>
-        public const string List = "/List";
+        public const string List = "List";
                
         /// <summary>
         /// 获取产品类型分类
         /// </summary>
-        public const string OrderBizType = "/BizType/List";
+        public const string OrderBizType = "BizType/List";
         /// <summary>
         /// 获取业务类型分类
         /// </summary>
-        public const string OrderProType = "/ProType/List/{name}";        
+        public const string OrderProType = "ProType/List/{name}";        
 
-        public const string ListGet = "/Get";
+        public const string ListGet = "Get";
         #endregion
 
         #region 发货页面路由
-        public const string SendOrderBase = "/SendOrder";
+        public const string SendOrderBase = "SendOrder";
 
         /// <summary>
         /// 获取发货明细列表
@@ -74,37 +74,45 @@ namespace JC_ERP.Modules
 
         public const string SendOrderAdd = "SendOrderAdd";
 
-        public const string GetDetail = "/GetDetail/{id:int}";
+        public const string GetDetail = "GetDetail/{id:int}";
         #endregion
 
         #region 
-        public const string GroupBase = "/Group";
+        public const string GroupBase = "Group";
         #endregion
 
         #region 基础数据管理
-        public const string BaseDataBase = "/BaseData";
+        public const string BaseDataBase = "BaseData";
 
-        public const string Roles = "/Roles";
+        public const string Roles = "Roles";
 
-        public const string UserList = "/UserList";
+        public const string UserList = "UserList";
 
-        public const string RolesGet = "/Roles/Get";
+        public const string RolesGet = "Roles/Get";
 
-        public const string RolesSimpleGet = "/Roles/SimpleGet";
+        public const string RolesSimpleGet = "Roles/SimpleGet";
 
-        public const string UserListGet = "/UserList/Get";
+        public const string UserListGet = "UserList/Get";
 
-        public const string UserEdit = "/UserList/Edit";
+        public const string UserEdit = "UserList/Edit";
 
-        public const string UserDel = "/UserList/Del";
+        public const string UserDel = "UserList/Del";
 
-        public const string RolesEdit = "/Roles/Edit";
+        public const string RolesEdit = "Roles/Edit";
 
-        public const string RolesDel = "/Roles/Del";
+        public const string RolesDel = "Roles/Del";
 
-        public const string RolesMenus = "/Menus";
+        public const string RolesMenus = "Menus";
 
-        public const string PwdEdit = "/Pwd/Edit";
+        public const string PwdEdit = "Pwd/Edit";
+        #endregion
+
+        #region 统计管理
+        public const string BaseStat = "BaseStat";
+
+        public const string StatOrder = "Order";
+
+        public const string StatOrderGet = "OrderGet";
         #endregion
     }
 }

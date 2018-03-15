@@ -13,44 +13,48 @@ namespace JC_ERP.Modules
         /// <summary>
         /// 首页视图
         /// </summary>
-        public const string Index = "/index";
+        public const string Index = "index";
         /// <summary>
         /// 登陆页面
         /// </summary>
-        public const string Login = "/login.html";
+        public const string Login = "login.html";
 
         #region 订单相关
-        public const string OrderAdd = "/Order/AddOrder";
+        public const string OrderAdd = "Order/AddOrder";
 
         /// <summary>
         /// 查询合同
         /// </summary>
-        public const string OrderList = "/Order/OrderList";
+        public const string OrderList = "Order/OrderList";
         #endregion
 
         #region 发货单相关
-        public const string SendOrderAdd = "/SendOrder/AddSendOrder";
+        public const string SendOrderAdd = "SendOrder/AddSendOrder";
         /// <summary>
         /// 查询发货单
         /// </summary>
-        public const string SendOrderList = "/SendOrder/SendOrderList";
+        public const string SendOrderList = "SendOrder/SendOrderList";
         #endregion
 
         #region 发货组相关
         /// <summary>
         /// 查询发货组
         /// </summary>
-        public const string GroupList = "/Group/List";
+        public const string GroupList = "Group/List";
         /// <summary>
         /// 添加发货组
         /// </summary>
-        public const string GroupAdd = "/Group/Add";
+        public const string GroupAdd = "Group/Add";
         #endregion
 
         #region 基础数据管理
-        public const string BaseDataRolesList = "/BaseData/Roles";
+        public const string BaseDataRolesList = "BaseData/Roles";
 
-        public const string BaseDataUserList = "/BaseData/UserList";
+        public const string BaseDataUserList = "BaseData/UserList";
+        #endregion
+
+        #region 统计管理
+        public const string StatOrderList = "Stat/OrderList";
         #endregion
     }
 }
